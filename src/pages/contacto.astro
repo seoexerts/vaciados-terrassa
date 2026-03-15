@@ -1,0 +1,449 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ciudades, EMPRESA } from '../data/index';
+import { servicios as catalogoServicios } from '../data/servicios';
+
+const title       = `Contacto | ${EMPRESA.nombre}`;
+const description = `Contacta con ${EMPRESA.nombre}. Solicita tu presupuesto gratuito en ${ciudades.map(c => c.nombre).join(', ')}. Respondemos en menos de 24 horas laborables.`;
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="container">
+      <span class="eyebrow">Contacto</span>
+      <h1>Contacto</h1>
+      <p class="page-header-sub">
+        Solicita tu presupuesto gratuito sin compromiso.
+        Te respondemos en menos de 24 horas laborables.
+      </p>
+    </div>
+  </div>
+
+  <section class="page-section" aria-label="Contacto">
+    <div class="container contact-layout">
+
+      <!-- ── Bloque lateral de datos ── -->
+      <aside class="contact-info">
+
+        <h2>Habla con nosotros</h2>
+
+        <!-- Direct CTA buttons -->
+        <div class="contact-direct">
+          <a href={`tel:${ciudades[0].telefono.replace(/\s/g, '')}`}
+             class="btn btn-primary btn-lg">
+            📞 Llamar ahora
+          </a>
+          <a href={`https://wa.me/${EMPRESA.whatsapp}?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto`}
+             class="btn btn-whatsapp btn-lg"
+             target="_blank" rel="noopener noreferrer">
+            💬 WhatsApp
+          </a>
+        </div>
+
+        <!-- Horario y urgencias -->
+        <div class="contact-meta">
+          <div class="contact-meta-item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="10" cy="10" r="8"/><path d="M10 6v4l2.5 2.5"/>
+            </svg>
+            <div>
+              <strong>Horario</strong>
+              <span>{EMPRESA.horarioTexto}</span>
+            </div>
+          </div>
+          <div class="contact-meta-item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M10 2l2.09 6.26H18l-5 3.64 1.91 5.84L10 14.27l-4.91 3.47 1.91-5.84-5-3.64h5.91z"/>
+            </svg>
+            <div>
+              <strong>Urgencias</strong>
+              <span>Disponibles 24 / 7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Oficinas por ciudad -->
+        <h3 class="offices-heading">Nuestras oficinas</h3>
+        <ul class="office-list">
+          {ciudades.map(ciudad => (
+            <li class="office-card">
+              <div class="office-card-header">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                  <path d="M8 1.5C5.52 1.5 3.5 3.52 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.48-2.02-4.5-4.5-4.5z"/>
+                  <circle cx="8" cy="6" r="1.5"/>
+                </svg>
+                <strong>{ciudad.nombre}</strong>
+                <span class="office-province">{ciudad.provincia}</span>
+              </div>
+              <address>
+                <p>{ciudad.direccion}, {ciudad.codigoPostal}</p>
+                <p>
+                  <a href={`tel:${ciudad.telefono.replace(/\s/g, '')}`}>
+                    {ciudad.telefono}
+                  </a>
+                </p>
+                <p>
+                  <a href={`mailto:${ciudad.email}`}>
+                    {ciudad.email}
+                  </a>
+                </p>
+              </address>
+            </li>
+          ))}
+        </ul>
+
+      </aside>
+
+      <!-- ── Formulario Netlify ── -->
+      <div class="contact-form-wrap">
+
+        <h2>Solicita tu presupuesto gratuito</h2>
+
+        <!-- Hidden form for Netlify bot detection -->
+        <form name="contacto" data-netlify="true" hidden>
+          <input type="text"     name="nombre"   />
+          <input type="tel"      name="telefono" />
+          <input type="email"    name="email"    />
+          <select name="ciudad"></select>
+          <select name="servicio"></select>
+          <textarea name="mensaje"></textarea>
+        </form>
+
+        <form
+          class="contact-form"
+          name="contacto"
+          method="POST"
+          action="/gracias/"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          novalidate
+        >
+          <!-- Netlify required hidden fields -->
+          <input type="hidden" name="form-name" value="contacto" />
+          <p class="visually-hidden">
+            <label>No rellenar si eres humano: <input name="bot-field" /></label>
+          </p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="nombre">Nombre <abbr title="Obligatorio">*</abbr></label>
+              <input
+                id="nombre" name="nombre" type="text"
+                placeholder="Tu nombre completo"
+                required autocomplete="name"
+              />
+            </div>
+            <div class="form-group">
+              <label for="telefono">Teléfono <abbr title="Obligatorio">*</abbr></label>
+              <input
+                id="telefono" name="telefono" type="tel"
+                placeholder="+34 600 000 000"
+                required autocomplete="tel"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              Email <span class="form-optional">(opcional)</span>
+            </label>
+            <input
+              id="email" name="email" type="email"
+              placeholder="tucorreo@ejemplo.com"
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="ciudad">Ciudad <abbr title="Obligatorio">*</abbr></label>
+              <select id="ciudad" name="ciudad" required>
+                <option value="">Selecciona tu ciudad</option>
+                {ciudades.map(c => (
+                  <option value={c.slug}>{c.nombre}</option>
+                ))}
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="servicio">Servicio <abbr title="Obligatorio">*</abbr></label>
+              <select id="servicio" name="servicio" required>
+                <option value="">¿Qué necesitas?</option>
+                {catalogoServicios.map(s => (
+                  <option value={s.slug}>{s.nombre}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje">
+              Mensaje <span class="form-optional">(opcional)</span>
+            </label>
+            <textarea
+              id="mensaje" name="mensaje" rows="4"
+              placeholder="Describe brevemente el trabajo que necesitas o el problema que tienes..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-full">
+            Enviar solicitud →
+          </button>
+
+          <p class="form-legal">
+            Al enviar aceptas nuestra{' '}
+            <a href="/privacidad/">política de privacidad</a>.
+            No spam, solo te contactamos para tu solicitud.
+          </p>
+          <p class="form-srv-link">
+            ¿Quieres ver todos los servicios disponibles?
+            <a href="/servicios/">Consulta nuestro catálogo de servicios de vaciado →</a>
+          </p>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Page header ── */
+  .page-header {
+    margin-top: var(--header-h);
+    background: linear-gradient(150deg, #0d1b3e 0%, #0f2a5c 50%, #0057ff 100%);
+    padding-block: 4.5rem 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 75% 15%, rgba(0,100,255,.3) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 40% at 15% 85%, rgba(80,80,200,.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page-header .container { position: relative; z-index: 1; }
+  .page-header .eyebrow {
+    color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .page-header h1 { color: #fff; margin-bottom: .75rem; margin-top: .5rem; }
+  .page-header-sub {
+    color: rgba(255,255,255,.72);
+    font-size: 1rem;
+    max-width: 560px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+
+  /* ── Two-column layout ── */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 860px) {
+    .contact-layout { grid-template-columns: 1fr 1.45fr; gap: 4rem; }
+  }
+
+  /* ── Sidebar ── */
+  .contact-info h2 { font-size: 1.2rem; margin-bottom: 1.25rem; }
+
+  .contact-direct {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Meta: horario + urgencias */
+  .contact-meta {
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    margin-bottom: 2rem;
+    padding: 1.1rem 1.25rem;
+    background: var(--c-bg-tint);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+  }
+  .contact-meta-item {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+  }
+  .contact-meta-item svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--c-primary);
+    margin-top: .1rem;
+  }
+  .contact-meta-item div {
+    display: flex;
+    flex-direction: column;
+    gap: .1rem;
+    font-size: .88rem;
+  }
+  .contact-meta-item strong { color: var(--c-text); }
+  .contact-meta-item span  { color: var(--c-text-m); }
+
+  /* Office cards */
+  .offices-heading {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: var(--c-text-m);
+    font-weight: 600;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+    font-size: .75rem;
+  }
+  .office-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+  .office-card {
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    padding: .9rem 1rem;
+  }
+  .office-card-header {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .875rem;
+    font-weight: 600;
+    margin-bottom: .5rem;
+  }
+  .office-card-header svg { width: 13px; height: 13px; color: var(--c-primary); flex-shrink: 0; }
+  .office-province {
+    margin-inline-start: auto;
+    font-size: .72rem;
+    font-weight: 400;
+    color: var(--c-text-l);
+  }
+  address {
+    font-style: normal;
+    font-size: .83rem;
+    color: var(--c-text-m);
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+  address a { color: var(--c-text-m); transition: color .15s; }
+  address a:hover { color: var(--c-primary); text-decoration: none; }
+
+  /* ── Form wrapper ── */
+  .contact-form-wrap {
+    background: var(--c-bg-tint);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-xl);
+    padding: 2rem 2rem 1.75rem;
+  }
+  .contact-form-wrap > h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .form-row { display: grid; gap: 1rem; }
+  @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: .35rem; }
+
+  .form-group label {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--c-text);
+  }
+  .form-group label abbr {
+    text-decoration: none;
+    color: var(--c-primary);
+    margin-inline-start: .15rem;
+  }
+  .form-optional { font-weight: 400; color: var(--c-text-l); }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: var(--font);
+    font-size: .92rem;
+    color: var(--c-text);
+    background: var(--c-bg);
+    border: 1.5px solid var(--c-border);
+    border-radius: var(--r-sm);
+    padding: .65rem .9rem;
+    width: 100%;
+    outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    appearance: none;
+  }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(0,87,255,.1);
+    background: var(--c-white, #fff);
+  }
+
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2394a3b8'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .btn-full { width: 100%; justify-content: center; }
+
+  .form-legal {
+    font-size: .74rem;
+    color: var(--c-text-l);
+    text-align: center;
+    line-height: 1.6;
+  }
+  .form-legal a { color: var(--c-text-l); text-decoration: underline; }
+  .form-srv-link {
+    font-size: .8rem;
+    color: var(--c-text-m);
+    text-align: center;
+    margin-top: .5rem;
+  }
+  .form-srv-link a { color: var(--c-primary); font-weight: 500; }
+
+  /* Honeypot – visually hidden but accessible */
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

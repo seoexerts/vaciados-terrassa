@@ -1,0 +1,96 @@
+---
+import type { Ciudad, ServicioResuelto } from '../data/index';
+import { EMPRESA } from '../data/empresa';
+import { siteConfig } from '../config/site';
+
+interface Props {
+  ciudad: Ciudad;
+  servicio: ServicioResuelto;
+  url: string;
+}
+
+const { ciudad, servicio, url } = Astro.props;
+
+// sameAs: filtra redes sociales vacías y añade la web principal
+const sameAs = [
+  siteConfig.web,
+  siteConfig.social.facebook,
+  siteConfig.social.instagram,
+  siteConfig.social.linkedin,
+].filter(Boolean);
+
+const schema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: EMPRESA.nombre,
+  legalName: EMPRESA.nombreLegal,
+  description: `${servicio.nombre} en ${ciudad.nombre}. ${servicio.descripcionCorta}`,
+  url,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${siteConfig.web}${EMPRESA.logo}`,
+  },
+  image: `${siteConfig.web}${EMPRESA.logo}`,
+  telephone: ciudad.telefono,
+  email: ciudad.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: ciudad.direccion,
+    addressLocality: ciudad.nombre,
+    addressRegion: ciudad.provincia,
+    postalCode: ciudad.codigoPostal,
+    addressCountry: 'ES',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: ciudad.lat,
+    longitude: ciudad.lng,
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: siteConfig.horarioDias,
+    opens: siteConfig.horarioAbre,
+    closes: siteConfig.horarioCierra,
+  },
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: ciudad.telefono,
+    email: ciudad.email,
+    contactType: 'customer service',
+    areaServed: ciudad.provincia,
+    availableLanguage: 'Spanish',
+  },
+  priceRange: siteConfig.priceRange,
+  areaServed: [
+    { '@type': 'City', name: ciudad.nombre },
+    ...ciudad.zonas.map((zona) => ({ '@type': 'Place', name: zona })),
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: `Servicios en ${ciudad.nombre}`,
+    itemListElement: ciudad.servicios.map((s) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: s.nombre,
+        description: s.descripcionCorta,
+      },
+      priceCurrency: 'EUR',
+      availability: 'https://schema.org/InStock',
+    })),
+  },
+  sameAs,
+};
+
+// aggregateRating solo si está configurado en siteConfig
+if (siteConfig.aggregateRating) {
+  schema.aggregateRating = {
+    '@type': 'AggregateRating',
+    ratingValue: siteConfig.aggregateRating.ratingValue,
+    reviewCount: siteConfig.aggregateRating.reviewCount,
+    bestRating: siteConfig.aggregateRating.bestRating,
+  };
+}
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

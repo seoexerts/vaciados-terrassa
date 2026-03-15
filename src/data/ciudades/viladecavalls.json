@@ -1,0 +1,16 @@
+{
+  "slug": "viladecavalls",
+  "nombre": "Viladecavalls",
+  "provincia": "Barcelona",
+  "lat": 41.5236,
+  "lng": 1.9928,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08232",
+  "zonas": [
+    "Centre", "Can Trias", "Les Fonts",
+    "Terrassa", "Ullastrell", "Vacarisses", "Olesa de Montserrat"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}

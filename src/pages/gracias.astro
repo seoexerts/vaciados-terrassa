@@ -1,0 +1,138 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+
+const title       = `Solicitud recibida | ${siteConfig.businessName}`;
+const description = `Hemos recibido tu solicitud. Nos pondremos en contacto contigo en menos de 24 horas.`;
+---
+
+<BaseLayout title={title} description={description}>
+
+  <div class="gracias-wrap">
+    <div class="container">
+      <div class="gracias-card">
+
+        <div class="gracias-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="32" cy="32" r="32" fill="#eff6ff"/>
+            <polyline points="18 33 27 42 46 22" stroke="#0057ff" stroke-width="4"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <h1>¡Solicitud recibida!</h1>
+        <p class="gracias-sub">
+          Gracias por contactar con <strong>{siteConfig.businessName}</strong>.
+          Nos pondremos en contacto contigo en menos de 24 horas laborables.
+        </p>
+
+        <div class="gracias-info">
+          <div class="gracias-info-item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <circle cx="10" cy="10" r="8"/><path d="M10 6v4l2.5 2.5"/>
+            </svg>
+            <span>Respuesta en menos de <strong>24 horas</strong> laborables</span>
+          </div>
+          <div class="gracias-info-item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5z"/>
+              <path d="M2 8l8 5 8-5"/>
+            </svg>
+            <span>Recibirás el presupuesto por <strong>email</strong></span>
+          </div>
+          <div class="gracias-info-item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+              <path d="M17 4H3a1 1 0 00-1 1v10a1 1 0 001 1h14a1 1 0 001-1V5a1 1 0 00-1-1z"/>
+              <path d="M1 8h18"/>
+            </svg>
+            <span>Sin compromiso ni letra pequeña</span>
+          </div>
+        </div>
+
+        <div class="gracias-ctas">
+          <a href="/" class="btn btn-primary btn-lg">Volver al inicio</a>
+          <a
+            href={`https://wa.me/${siteConfig.whatsapp}?text=Hola%2C%20acabo%20de%20enviar%20un%20formulario%20y%20quería%20confirmar%20que%20lo%20habéis%20recibido`}
+            class="btn btn-whatsapp btn-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            💬 Confirmar por WhatsApp
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</BaseLayout>
+
+<style>
+  .gracias-wrap {
+    margin-top: var(--header-h);
+    min-height: calc(100vh - var(--header-h) - 80px);
+    display: flex;
+    align-items: center;
+    padding-block: 4rem;
+    background: var(--c-bg-tint);
+  }
+
+  .gracias-card {
+    max-width: 560px;
+    margin-inline: auto;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-xl);
+    padding: 3rem 2.5rem;
+    text-align: center;
+    box-shadow: var(--sh-card);
+  }
+
+  .gracias-icon {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 1.5rem;
+  }
+  .gracias-icon svg { width: 100%; height: 100%; }
+
+  h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); margin-bottom: .75rem; }
+
+  .gracias-sub {
+    color: var(--c-text-m);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .gracias-info {
+    display: flex;
+    flex-direction: column;
+    gap: .85rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--c-bg-tint);
+    border-radius: var(--r-md);
+    text-align: left;
+  }
+  .gracias-info-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .9rem;
+    color: var(--c-text-m);
+  }
+  .gracias-info-item svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    color: var(--c-primary);
+  }
+  .gracias-info-item strong { color: var(--c-text); }
+
+  .gracias-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    justify-content: center;
+  }
+</style>

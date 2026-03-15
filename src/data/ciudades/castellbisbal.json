@@ -1,0 +1,16 @@
+{
+  "slug": "castellbisbal",
+  "nombre": "Castellbisbal",
+  "provincia": "Barcelona",
+  "lat": 41.4742,
+  "lng": 1.9778,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08755",
+  "zonas": [
+    "Centre", "Can Gorgs", "Les Escoles",
+    "Rubí", "Terrassa", "Martorell", "El Papiol"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}

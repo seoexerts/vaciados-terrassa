@@ -1,0 +1,629 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ciudades, EMPRESA } from '../data/index';
+
+const title       = `Sobre nosotros | ${EMPRESA.nombre}`;
+const description = `Conoce la historia, valores y equipo de ${EMPRESA.nombreLegal}. Más de 10 años ofreciendo servicios técnicos profesionales en ${ciudades.map(c => c.nombre).join(', ')}.`;
+
+// Hitos de la empresa — edita según tu historia real
+const hitos = [
+  {
+    año: '2014',
+    titulo: 'Los comienzos',
+    texto: 'Fundamos la empresa con un único objetivo: ofrecer un servicio técnico honesto, sin sorpresas en la factura y con garantía real. Empezamos en Madrid con un equipo de tres personas.',
+  },
+  {
+    año: '2017',
+    titulo: 'Expansión regional',
+    texto: 'Tras consolidar nuestra presencia en Madrid, abrimos delegaciones en Barcelona y Valencia. El crecimiento fue posible gracias a la confianza de nuestros primeros clientes.',
+  },
+  {
+    año: '2020',
+    titulo: 'Adaptación y resiliencia',
+    texto: 'Durante los años más difíciles mantuvimos el servicio de urgencias activo y reforzamos los protocolos de seguridad. Ningún cliente se quedó sin atención.',
+  },
+  {
+    año: '2023',
+    titulo: 'Cobertura nacional',
+    texto: `Alcanzamos presencia en ${ciudades.length} ciudades con personal propio en cada una. Hoy somos más de 30 técnicos certificados comprometidos con la calidad.`,
+  },
+];
+
+// Valores — icono SVG inline + título + descripción
+const valores = [
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+    titulo: 'Transparencia total',
+    texto: 'El presupuesto que te enviamos es el que pagas. Sin cargos inesperados, sin letra pequeña. Cada intervención queda documentada por escrito.',
+  },
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>`,
+    titulo: 'Respuesta rápida',
+    texto: 'Sabemos que tu tiempo es valioso. Nos comprometemos a responder en menos de 24 horas y a cumplir los plazos acordados sin excepciones.',
+  },
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`,
+    titulo: 'Calidad garantizada',
+    texto: 'Trabajamos exclusivamente con materiales de fabricantes homologados. Todos los trabajos incluyen garantía por escrito: 2 años en instalaciones, 1 año en reparaciones.',
+  },
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    titulo: 'Atención personalizada',
+    texto: 'Cada cliente tiene un técnico de referencia asignado. Siempre sabrás con quién hablas y podrás consultar el historial completo de tus intervenciones.',
+  },
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    titulo: 'Cobertura nacional',
+    texto: `Operamos con personal propio en ${ciudades.length} ciudades. No subcontratamos: el técnico que viene a tu casa trabaja directamente para nosotros y comparte nuestros valores.`,
+  },
+  {
+    icono: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
+    titulo: 'Formación continua',
+    texto: 'Nuestros técnicos se forman de manera continua para estar al día con las últimas normativas, tecnologías y materiales del sector.',
+  },
+];
+
+// Equipo — roles y descripciones (adapta nombres y fotos reales)
+const equipo = [
+  {
+    nombre: 'Carlos Martínez',
+    rol: 'Director técnico',
+    descripcion: 'Ingeniero industrial con 15 años de experiencia en instalaciones y mantenimiento industrial. Responsable de la formación y los estándares de calidad.',
+    iniciales: 'CM',
+  },
+  {
+    nombre: 'Laura Sánchez',
+    rol: 'Responsable de operaciones',
+    descripcion: 'Coordina los equipos en todas las ciudades y garantiza que cada intervención se ejecute en el plazo comprometido con el cliente.',
+    iniciales: 'LS',
+  },
+  {
+    nombre: 'Javier Romero',
+    rol: 'Técnico jefe — Madrid',
+    descripcion: 'Técnico especialista con certificaciones oficiales. Lidera el equipo de Madrid y forma a los técnicos de nueva incorporación.',
+    iniciales: 'JR',
+  },
+  {
+    nombre: 'Ana Torres',
+    rol: 'Atención al cliente',
+    descripcion: 'Primera línea de contacto con los clientes. Gestiona presupuestos, citas y el seguimiento post-intervención para asegurar la satisfacción total.',
+    iniciales: 'AT',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- ── Page header ──────────────────────────────────── -->
+  <header class="page-hero">
+    <div class="container page-hero-inner">
+      <div class="page-hero-text">
+        <span class="eyebrow">Quiénes somos</span>
+        <h1>Una empresa construida sobre la confianza</h1>
+        <p>
+          Somos <strong>{EMPRESA.nombreLegal}</strong>, especialistas en servicios técnicos
+          para particulares y empresas en toda España. Más de 10 años haciendo las cosas
+          bien, sin letra pequeña y con garantía por escrito en cada trabajo.
+        </p>
+        <a href="/contacto" class="btn btn-primary btn-lg">Solicitar presupuesto gratis</a>
+      </div>
+
+      <!-- Cifras destacadas -->
+      <dl class="page-hero-stats" aria-label="Cifras clave">
+        <div>
+          <dt>+500</dt>
+          <dd>Clientes satisfechos</dd>
+        </div>
+        <div>
+          <dt>{ciudades.length}</dt>
+          <dd>Ciudades con cobertura</dd>
+        </div>
+        <div>
+          <dt>+30</dt>
+          <dd>Técnicos certificados</dd>
+        </div>
+        <div>
+          <dt>10 años</dt>
+          <dd>De experiencia</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+
+  <!-- ── Historia ─────────────────────────────────────── -->
+  <section class="sn-section" aria-labelledby="historia-heading">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Nuestra historia</span>
+        <h2 id="historia-heading">De un equipo pequeño a toda España</h2>
+        <p class="section-sub">
+          Todo empezó con una idea sencilla: que contratar un servicio técnico no debería
+          ser complicado, caro ni lleno de sorpresas. Aquí está nuestro recorrido.
+        </p>
+      </div>
+
+      <ol class="timeline" aria-label="Hitos de la empresa">
+        {hitos.map((hito, i) => (
+          <li class="timeline-item">
+            <div class="timeline-marker" aria-hidden="true">
+              <span class="timeline-year">{hito.año}</span>
+            </div>
+            <div class="timeline-content">
+              <h3>{hito.titulo}</h3>
+              <p>{hito.texto}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- ── Valores ───────────────────────────────────────── -->
+  <section class="sn-section sn-section--tinted" aria-labelledby="valores-heading">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">Nuestros valores</span>
+        <h2 id="valores-heading">Lo que nos define cada día</h2>
+        <p class="section-sub">
+          Los valores no son un cartel en la pared. Son las decisiones que tomamos
+          cuando nadie mira y los compromisos que cumplimos aunque sea difícil.
+        </p>
+      </div>
+
+      <ul class="valores-grid" role="list">
+        {valores.map(v => (
+          <li class="valor-card">
+            <div class="valor-icon" aria-hidden="true" set:html={v.icono} />
+            <h3>{v.titulo}</h3>
+            <p>{v.texto}</p>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ── Equipo ────────────────────────────────────────── -->
+  <section class="sn-section" aria-labelledby="equipo-heading">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="eyebrow">El equipo</span>
+        <h2 id="equipo-heading">Las personas detrás del servicio</h2>
+        <p class="section-sub">
+          Nuestro equipo está formado por profesionales comprometidos con la calidad.
+          Sin intermediarios: quienes trabajan en tu casa son empleados directos de
+          {EMPRESA.nombre}.
+        </p>
+      </div>
+
+      <ul class="equipo-grid" role="list">
+        {equipo.map(persona => (
+          <li class="equipo-card">
+            <div class="equipo-avatar" aria-hidden="true">
+              <span>{persona.iniciales}</span>
+            </div>
+            <div class="equipo-info">
+              <h3>{persona.nombre}</h3>
+              <p class="equipo-rol">{persona.rol}</p>
+              <p class="equipo-bio">{persona.descripcion}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <p class="equipo-nota">
+        ¿Quieres formar parte del equipo?
+        <a href="/contacto">Envíanos tu candidatura</a>.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- ── Cobertura geográfica ──────────────────────────── -->
+  <section class="sn-section sn-section--dark" aria-labelledby="cobertura-heading">
+    <div class="container">
+
+      <div class="section-header section-header--light">
+        <span class="eyebrow eyebrow--light">Cobertura</span>
+        <h2 id="cobertura-heading">Dónde trabajamos</h2>
+        <p class="section-sub section-sub--light">
+          Operamos con técnicos propios en {ciudades.length} ciudades.
+          Sin subcontratas, sin tiempos de espera inflados.
+        </p>
+      </div>
+
+      <ul class="cobertura-grid" role="list">
+        {ciudades.map(ciudad => (
+          <li class="cobertura-card">
+            <div class="cobertura-card-header">
+              <span class="cobertura-pin" aria-hidden="true">📍</span>
+              <div>
+                <h3>{ciudad.nombre}</h3>
+                <span class="cobertura-provincia">{ciudad.provincia}</span>
+              </div>
+            </div>
+            <ul class="cobertura-servicios">
+              {ciudad.servicios.map(s => (
+                <li>
+                  <a href={`/${ciudad.slug}/${s.slug}/`}>
+                    {s.nombre}
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                         stroke-width="1.8" aria-hidden="true">
+                      <path d="M3 8h10M9 4l4 4-4 4"/>
+                    </svg>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ── CTA final ─────────────────────────────────────── -->
+  <section class="sn-cta-final" aria-label="Llamada a la acción">
+    <div class="container sn-cta-final-inner">
+      <div>
+        <h2>¿Hablamos?</h2>
+        <p>Cuéntanos qué necesitas. Presupuesto gratuito en menos de 24&nbsp;horas.</p>
+      </div>
+      <div class="sn-cta-final-btns">
+        <a href="/contacto" class="btn btn-primary btn-lg">Solicitar presupuesto</a>
+        <a href={`tel:${ciudades[0].telefono.replace(/\s/g,'')}`}
+           class="btn btn-outline-white btn-lg">
+          📞 {ciudades[0].telefono}
+        </a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ════════════════════════════════════════════════════════
+     PAGE HERO
+  ════════════════════════════════════════════════════════ */
+  .page-hero {
+    margin-top: var(--header-h);
+    background: linear-gradient(140deg, #0b1629 0%, #0f2d6b 60%, #1e40af 100%);
+    padding-block: 5rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+
+  .page-hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+    padding-bottom: 4rem;
+  }
+  @media (min-width: 860px) {
+    .page-hero-inner { grid-template-columns: 1fr 1fr; align-items: center; }
+  }
+
+  .page-hero-text { color: #fff; }
+  .page-hero-text .eyebrow {
+    color: rgba(255,255,255,.85);
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .page-hero-text h1  { color: #fff; margin-block: .75rem 1.1rem; }
+  .page-hero-text p   { color: rgba(255,255,255,.75); font-size: 1.05rem; line-height: 1.75; margin-bottom: 2rem; max-width: 500px; }
+  .page-hero-text strong { color: #fff; }
+
+  /* Stats grid en el hero */
+  .page-hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--r-xl);
+    overflow: hidden;
+  }
+  .page-hero-stats > div {
+    background: rgba(255,255,255,.06);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: background .2s;
+  }
+  .page-hero-stats > div:hover { background: rgba(255,255,255,.1); }
+  .page-hero-stats dt {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -.04em;
+    color: #fff;
+    line-height: 1;
+    margin-bottom: .3rem;
+    background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,.65));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .page-hero-stats dd {
+    font-size: .78rem;
+    color: rgba(255,255,255,.55);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════
+     SECTIONS
+  ════════════════════════════════════════════════════════ */
+  .sn-section           { padding-block: 5rem; }
+  .sn-section--tinted   { background: var(--c-bg-tint); }
+  .sn-section--dark     { background: var(--c-bg-dark); }
+
+  @media (max-width: 768px) { .sn-section { padding-block: 3.5rem; } }
+
+  .section-header--light h2 { color: #fff; }
+  .section-sub--light       { color: rgba(255,255,255,.65); }
+
+  /* ════════════════════════════════════════════════════════
+     HISTORIA — TIMELINE
+  ════════════════════════════════════════════════════════ */
+  .timeline {
+    list-style: none;
+    position: relative;
+    max-width: 760px;
+    margin-inline: auto;
+    padding-left: 1rem;
+  }
+
+  /* Línea vertical central */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: calc(1rem + 1.5rem);     /* alineada con los marcadores */
+    top: .5rem;
+    bottom: .5rem;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--c-primary), #a78bfa);
+    border-radius: 2px;
+  }
+  @media (min-width: 640px) {
+    .timeline::before { left: calc(1rem + 2rem); }
+  }
+
+  .timeline-item {
+    display: flex;
+    gap: 1.75rem;
+    padding-bottom: 2.5rem;
+    align-items: flex-start;
+    position: relative;
+  }
+  .timeline-item:last-child { padding-bottom: 0; }
+
+  /* Marcador circular con el año */
+  .timeline-marker {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    background: var(--c-primary);
+    border: 3px solid var(--c-bg);
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px var(--c-primary);
+    position: relative;
+    z-index: 1;
+  }
+  @media (min-width: 640px) { .timeline-marker { width: 4rem; height: 4rem; } }
+
+  .timeline-year {
+    font-size: .65rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: .02em;
+  }
+  @media (min-width: 640px) { .timeline-year { font-size: .75rem; } }
+
+  .timeline-content {
+    padding-top: .5rem;
+    padding-bottom: 0;
+  }
+  .timeline-content h3 { font-size: 1.05rem; margin-bottom: .5rem; color: var(--c-text); }
+  .timeline-content p  { font-size: .92rem; color: var(--c-text-m); line-height: 1.75; }
+
+  /* ════════════════════════════════════════════════════════
+     VALORES
+  ════════════════════════════════════════════════════════ */
+  .valores-grid {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 560px)  { .valores-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .valores-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .valor-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 1.75rem 1.5rem;
+    transition: box-shadow .2s, transform .2s, border-color .2s;
+  }
+  .valor-card:hover {
+    box-shadow: var(--sh-card);
+    border-color: #bfdbfe;
+    transform: translateY(-2px);
+  }
+
+  .valor-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: var(--c-primary);
+    margin-bottom: 1rem;
+  }
+  .valor-icon :global(svg) { width: 100%; height: 100%; }
+
+  .valor-card h3 { font-size: 1rem; margin-bottom: .5rem; }
+  .valor-card p  { font-size: .87rem; color: var(--c-text-m); line-height: 1.7; }
+
+  /* ════════════════════════════════════════════════════════
+     EQUIPO
+  ════════════════════════════════════════════════════════ */
+  .equipo-grid {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+    margin-bottom: 2rem;
+  }
+  @media (min-width: 560px)  { .equipo-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1000px) { .equipo-grid { grid-template-columns: repeat(4, 1fr); } }
+
+  .equipo-card {
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .equipo-card:hover { box-shadow: var(--sh-card); transform: translateY(-2px); }
+
+  /* Avatar con iniciales */
+  .equipo-avatar {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--c-primary), #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+  }
+  .equipo-avatar span {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: .03em;
+  }
+
+  .equipo-card h3     { font-size: .95rem; margin-bottom: .25rem; }
+  .equipo-rol         { font-size: .78rem; font-weight: 600; color: var(--c-primary); text-transform: uppercase; letter-spacing: .05em; margin-bottom: .75rem; }
+  .equipo-bio         { font-size: .83rem; color: var(--c-text-m); line-height: 1.65; }
+
+  .equipo-nota {
+    text-align: center;
+    font-size: .9rem;
+    color: var(--c-text-m);
+  }
+
+  /* ════════════════════════════════════════════════════════
+     COBERTURA
+  ════════════════════════════════════════════════════════ */
+  .cobertura-grid {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  }
+
+  .cobertura-card {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: var(--r-lg);
+    padding: 1.35rem 1.25rem;
+    transition: background .2s;
+  }
+  .cobertura-card:hover { background: rgba(255,255,255,.09); }
+
+  .cobertura-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: .6rem;
+    margin-bottom: 1rem;
+    padding-bottom: .85rem;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+  }
+  .cobertura-pin { font-size: 1rem; flex-shrink: 0; margin-top: .1rem; }
+  .cobertura-card-header h3 { font-size: .95rem; color: #fff; font-weight: 700; line-height: 1.2; }
+  .cobertura-provincia {
+    display: block;
+    font-size: .68rem;
+    color: rgba(255,255,255,.4);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    font-weight: 500;
+    margin-top: .15rem;
+  }
+
+  .cobertura-servicios {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+  .cobertura-servicios a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .5rem;
+    font-size: .83rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.65);
+    padding: .3rem .5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all .15s;
+  }
+  .cobertura-servicios a:hover {
+    color: #fff;
+    background: rgba(255,255,255,.08);
+    text-decoration: none;
+  }
+  .cobertura-servicios a:hover svg { opacity: .8; transform: translateX(2px); }
+  .cobertura-servicios svg {
+    width: 12px; height: 12px; flex-shrink: 0;
+    opacity: .3; transition: opacity .15s, transform .15s;
+  }
+
+  /* ════════════════════════════════════════════════════════
+     CTA FINAL
+  ════════════════════════════════════════════════════════ */
+  .sn-cta-final {
+    padding-block: 4rem;
+    background: var(--c-primary);
+  }
+  .sn-cta-final-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .sn-cta-final h2 { color: #fff; font-size: clamp(1.35rem, 3vw, 1.9rem); margin-bottom: .4rem; }
+  .sn-cta-final p  { color: rgba(255,255,255,.8); font-size: 1rem; }
+
+  .sn-cta-final-btns { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  .btn-outline-white {
+    display: inline-flex; align-items: center; gap: .4rem;
+    font-family: var(--font); font-weight: 600; font-size: 1rem;
+    padding: .8rem 1.75rem; border-radius: var(--r-sm);
+    background: transparent; color: #fff;
+    border: 2px solid rgba(255,255,255,.6);
+    text-decoration: none; transition: all .18s;
+  }
+  .btn-outline-white:hover { background: rgba(255,255,255,.12); border-color: #fff; text-decoration: none; }
+</style>

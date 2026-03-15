@@ -1,0 +1,310 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Base from '../../layouts/BaseLayout.astro';
+import LocalBusinessSchema from '../../components/LocalBusinessSchema.astro';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro';
+import FAQSchema from '../../components/FAQSchema.astro';
+import {
+  ciudades,
+  EMPRESA,
+  otrosServiciosEnCiudad,
+  mismosServicioOtrasCiudades,
+} from '../../data/index';
+
+export const getStaticPaths: GetStaticPaths = () =>
+  ciudades.flatMap((ciudad) =>
+    ciudad.servicios.map((servicio) => ({
+      params: { ciudad: ciudad.slug, servicio: servicio.slug },
+      props: { ciudad, servicio },
+    }))
+  );
+
+const { ciudad, servicio } = Astro.props;
+const canonical = `${EMPRESA.web}/${ciudad.slug}/${servicio.slug}/`;
+
+// Título y description únicos por combinación ciudad×servicio para evitar duplicados
+const title = `${servicio.nombre} en ${ciudad.nombre} – Presupuesto gratis 24 h | ${EMPRESA.nombre}`;
+const description = `${servicio.descripcionCorta} Equipo certificado en ${ciudad.nombre} y ${ciudad.provincia}. Llama ahora: ${ciudad.telefono}.`;
+
+const otrosServicios = otrosServiciosEnCiudad(ciudad.slug, servicio.slug);
+const otrasCiudades = mismosServicioOtrasCiudades(servicio.slug, ciudad.slug);
+---
+
+<Base title={title} description={description} canonical={canonical}>
+  <!-- Schemas en <head> -->
+  <LocalBusinessSchema ciudad={ciudad} servicio={servicio} url={canonical} slot="head" />
+  <FAQSchema faqs={servicio.faqs} slot="head" />
+  <BreadcrumbSchema
+    items={[
+      { name: 'Inicio', url: `${EMPRESA.web}/` },
+      { name: 'Servicios', url: `${EMPRESA.web}/servicios/` },
+      { name: `${servicio.nombre} en ${ciudad.nombre}`, url: canonical },
+    ]}
+    slot="head"
+  />
+
+  <!-- ① Breadcrumb visual ────────────────────────────────────────────── -->
+  <nav class="breadcrumb" aria-label="Ruta de navegación">
+    <ol>
+      <li><a href="/">Inicio</a></li>
+      <li><a href="/servicios/">Servicios</a></li>
+      <li aria-current="page">{servicio.nombre} en {ciudad.nombre}</li>
+    </ol>
+  </nav>
+
+  <!-- ② Hero ─────────────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>{servicio.nombre} en {ciudad.nombre}</h1>
+      <p class="hero-desc">{servicio.descripcionLarga}</p>
+      <div class="hero-ctas">
+        <a href={`tel:${ciudad.telefono.replace(/\s/g, '')}`} class="btn btn-primary">
+          📞 {ciudad.telefono}
+        </a>
+        <a
+          href={`https://wa.me/${EMPRESA.whatsapp}?text=Hola%2C%20me%20interesa%20${encodeURIComponent(servicio.nombre + ' en ' + ciudad.nombre)}`}
+          class="btn btn-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          💬 WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ Beneficios ────────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>¿Por qué elegirnos para {servicio.nombre} en {ciudad.nombre}?</h2>
+    <ul class="benefits">
+      {servicio.beneficios.map((b) => (
+        <li>
+          <span class="check" aria-hidden="true">✓</span>
+          {b}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <!-- ④ Proceso ───────────────────────────────────────────────────────── -->
+  <section class="section section-alt">
+    <h2>Cómo trabajamos en {ciudad.nombre}</h2>
+    <ol class="proceso">
+      {servicio.proceso.map((paso, i) => (
+        <li>
+          <span class="paso-num">{i + 1}</span>
+          <div>
+            <strong>{paso.titulo}</strong>
+            <p>{paso.descripcion}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- ⑤ Zonas atendidas ───────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>{servicio.nombre} en {ciudad.nombre} y alrededores</h2>
+    <p>
+      Prestamos servicio de <strong>{servicio.nombre.toLowerCase()}</strong> en{' '}
+      <strong>{ciudad.nombre}</strong> y en los siguientes barrios y municipios de{' '}
+      {ciudad.provincia}:
+    </p>
+    <ul class="zonas">
+      {ciudad.zonas.map((zona) => <li>{zona}</li>)}
+    </ul>
+  </section>
+
+  <!-- ⑥ Contacto ──────────────────────────────────────────────────────── -->
+  <section class="section section-contact">
+    <h2>Contacta con nuestro equipo en {ciudad.nombre}</h2>
+    <div class="contact-grid">
+      <address>
+        <p>📍 <strong>{ciudad.direccion}</strong>, {ciudad.codigoPostal} {ciudad.nombre}</p>
+        <p>
+          📞 <a href={`tel:${ciudad.telefono.replace(/\s/g, '')}`}>{ciudad.telefono}</a>
+        </p>
+        <p>
+          ✉️ <a href={`mailto:${ciudad.email}`}>{ciudad.email}</a>
+        </p>
+        <p>🕐 {EMPRESA.horarioTexto}</p>
+      </address>
+      <div class="contact-cta">
+        <p>¿Tienes dudas? Llámanos ahora o solicita tu presupuesto gratuito.</p>
+        <a href={`tel:${ciudad.telefono.replace(/\s/g, '')}`} class="btn btn-primary btn-lg">
+          Llamar ahora — {ciudad.telefono}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ FAQs ─────────────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>Preguntas frecuentes sobre {servicio.nombre} en {ciudad.nombre}</h2>
+    <dl class="faqs">
+      {servicio.faqs.map((faq) => (
+        <div class="faq-item">
+          <dt>{faq.pregunta}</dt>
+          <dd>{faq.respuesta}</dd>
+        </div>
+      ))}
+    </dl>
+  </section>
+
+  <!-- ⑧ Interlinking: otros servicios en esta ciudad ─────────────────── -->
+  {otrosServicios.length > 0 && (
+    <section class="section section-alt">
+      <h2>Más servicios de {EMPRESA.nombre} en {ciudad.nombre}</h2>
+      <ul class="link-list">
+        {otrosServicios.map((s) => (
+          <li>
+            <a href={s.href}>{s.nombre} en {ciudad.nombre}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <!-- ⑨ Interlinking: mismo servicio en otras ciudades ───────────────── -->
+  {otrasCiudades.length > 0 && (
+    <section class="section">
+      <h2>{servicio.nombre} en otras ciudades</h2>
+      <ul class="link-grid">
+        {otrasCiudades.map((c) => (
+          <li>
+            <a href={c.href}>{servicio.nombre} en {c.ciudad}</a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</Base>
+
+<style>
+  /* ── Breadcrumb ── */
+  .breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    list-style: none;
+    font-size: 0.82rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb li + li::before { content: '›'; margin-right: 0.5rem; color: #aaa; }
+  .breadcrumb a { color: #555; }
+  .breadcrumb [aria-current] { color: #1a1a2e; font-weight: 600; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #fff;
+    padding: 3rem 2.5rem;
+    border-radius: 14px;
+    margin-bottom: 3rem;
+  }
+  .hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.2; margin-bottom: 1rem; }
+  .hero-desc { font-size: 1.05rem; line-height: 1.7; opacity: 0.88; margin-bottom: 1.75rem; max-width: 680px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+  /* ── Buttons ── */
+  .btn {
+    display: inline-block;
+    padding: 0.7rem 1.4rem;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: filter 0.15s;
+    text-decoration: none;
+  }
+  .btn:hover { filter: brightness(1.1); text-decoration: none; }
+  .btn-primary { background: #0070f3; color: #fff; }
+  .btn-whatsapp { background: #25d366; color: #fff; }
+  .btn-lg { font-size: 1.05rem; padding: 0.85rem 1.75rem; }
+
+  /* ── Sections ── */
+  .section { margin-bottom: 3rem; }
+  .section-alt { background: #f8fafc; border-radius: 12px; padding: 2rem; }
+  .section h2 { font-size: 1.4rem; margin-bottom: 1.25rem; color: #1a1a2e; }
+
+  /* ── Benefits ── */
+  .benefits { list-style: none; display: grid; gap: 0.6rem; }
+  @media (min-width: 600px) { .benefits { grid-template-columns: 1fr 1fr; } }
+  .benefits li { display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.5; }
+  .check { color: #0070f3; font-weight: 700; flex-shrink: 0; margin-top: 0.05rem; }
+
+  /* ── Proceso ── */
+  .proceso { list-style: none; display: grid; gap: 1.25rem; }
+  @media (min-width: 700px) { .proceso { grid-template-columns: 1fr 1fr; } }
+  .proceso li { display: flex; gap: 1rem; align-items: flex-start; }
+  .paso-num {
+    flex-shrink: 0;
+    width: 2rem; height: 2rem;
+    background: #0070f3;
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem;
+  }
+  .proceso strong { display: block; margin-bottom: 0.3rem; }
+  .proceso p { font-size: 0.9rem; color: #444; margin: 0; }
+
+  /* ── Zonas ── */
+  .zonas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin-top: 0.75rem;
+  }
+  .zonas li {
+    background: #e8f0fe;
+    color: #1a1a2e;
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    font-size: 0.88rem;
+  }
+
+  /* ── Contact ── */
+  .section-contact { background: #1a1a2e; color: #fff; border-radius: 14px; padding: 2rem 2.5rem; }
+  .section-contact h2 { color: #fff; }
+  .contact-grid { display: grid; gap: 2rem; }
+  @media (min-width: 640px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+  address { font-style: normal; display: grid; gap: 0.6rem; font-size: 0.95rem; opacity: 0.9; }
+  address a { color: #7ab8f5; }
+  .contact-cta p { margin-bottom: 1rem; opacity: 0.85; }
+
+  /* ── FAQs ── */
+  .faqs { display: grid; gap: 0; }
+  .faq-item { border-bottom: 1px solid #e8e8e8; padding: 1.1rem 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faqs dt { font-weight: 700; font-size: 1rem; margin-bottom: 0.4rem; color: #1a1a2e; }
+  .faqs dd { margin: 0; color: #444; line-height: 1.65; font-size: 0.95rem; }
+
+  /* ── Interlinking ── */
+  .link-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .link-list a {
+    display: inline-block;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.9rem;
+    color: #0070f3;
+  }
+  .link-list a:hover { background: #f0f6ff; text-decoration: none; }
+  .link-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem;
+  }
+  .link-grid a {
+    display: block;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    padding: 0.5rem 0.9rem;
+    font-size: 0.9rem;
+    color: #0070f3;
+  }
+  .link-grid a:hover { background: #f0f6ff; text-decoration: none; }
+</style>

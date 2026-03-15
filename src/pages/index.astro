@@ -1,0 +1,1402 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ciudades, EMPRESA } from '../data/index';
+import { siteConfig } from '../config/site';
+
+const title       = `Vaciado de pisos y locales en Terrassa – Presupuesto gratis | ${siteConfig.businessName}`;
+const description = `Servicio de vaciado de pisos, locales y recogida de muebles en Terrassa y comarca. Presupuesto gratuito en 24 h, equipo propio, gestión de residuos certificada. Llama al ${siteConfig.phone}.`;
+
+const terrassa = ciudades.find(c => c.slug === 'terrassa') ?? ciudades[0];
+
+const faqs = [
+  {
+    pregunta: '¿Cuánto cuesta vaciar un piso en Terrassa?',
+    respuesta: 'El precio depende del tamaño y el volumen de enseres. Un piso de 70–90 m² suele estar entre 250 € y 500 €. Te enviamos presupuesto gratuito en menos de 24 horas, sin visita previa en muchos casos (basta con fotos).',
+  },
+  {
+    pregunta: '¿Cuánto tiempo tarda el vaciado?',
+    respuesta: 'La mayoría de pisos se vacían en un solo día. Un piso de 3 habitaciones con mobiliario completo lleva entre 4 y 8 horas con nuestro equipo. Los locales comerciales dependen del volumen.',
+  },
+  {
+    pregunta: '¿Qué hacéis con los muebles y objetos retirados?',
+    respuesta: 'Separamos los objetos en buen estado para donarlos a entidades sociales o canales de segunda mano. El resto se lleva a puntos de reciclaje autorizados en la provincia de Barcelona. Trabajamos de forma responsable.',
+  },
+  {
+    pregunta: '¿Podéis vaciar un piso de herencia con trámites pendientes?',
+    respuesta: 'Sí. Trabajamos habitualmente con gestorías, notarías y familiares en proceso de herencia. Podemos coordinar el vaciado con los tiempos legales y documentar lo retirado si es necesario.',
+  },
+  {
+    pregunta: '¿Trabajáis en fines de semana?',
+    respuesta: 'Sí, disponemos de servicio en fines de semana con cita previa. Consulta disponibilidad al solicitar el presupuesto.',
+  },
+  {
+    pregunta: '¿El presupuesto es realmente gratuito?',
+    respuesta: 'Sí, 100% gratuito y sin compromiso. En muchos casos te lo damos por teléfono o WhatsApp con fotos. Si el trabajo lo requiere, hacemos visita previa también sin coste.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- ① HERO LOCAL ─────────────────────────────────────── -->
+  <section class="hero" aria-label="Presentación del servicio">
+    <div class="container hero-inner">
+
+      <div class="hero-text">
+        <span class="eyebrow hero-eyebrow">Servicio local en Terrassa y comarca</span>
+
+        <h1>
+          Vaciado de pisos y locales<br />
+          <span class="hero-h1-accent">en Terrassa</span>
+        </h1>
+
+        <p class="hero-sub">
+          Retiramos muebles, trastos y residuos de cualquier inmueble.
+          Presupuesto gratuito en 24&nbsp;h, equipo propio y gestión de residuos certificada.
+        </p>
+
+        <div class="hero-ctas">
+          <a href={`tel:${terrassa.telefono.replace(/\s/g,'')}`} class="btn btn-primary btn-lg">
+            📞 Llamar ahora — {terrassa.telefono}
+          </a>
+          <a href="#contacto-form" class="btn btn-ghost btn-lg">
+            Pedir presupuesto gratis
+          </a>
+        </div>
+
+        <ul class="hero-badges" aria-label="Ventajas del servicio">
+          <li><span aria-hidden="true">⚡</span> Presupuesto en menos de 24&nbsp;h</li>
+          <li><span aria-hidden="true">🏠</span> Pisos, locales y naves</li>
+          <li><span aria-hidden="true">♻️</span> Gestión de residuos certificada</li>
+          <li><span aria-hidden="true">✅</span> Equipo propio, sin subcontratas</li>
+        </ul>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-card">
+          <div class="hero-card-header">
+            <span class="status-dot"></span>
+            <span>Disponible ahora en Terrassa</span>
+          </div>
+          <p class="hero-card-stat">+500</p>
+          <p class="hero-card-label">vaciados realizados</p>
+          <div class="hero-card-metrics">
+            <div><strong>{ciudades.length}</strong><span>municipios</span></div>
+            <div><strong>24 h</strong><span>presupuesto</span></div>
+            <div><strong>4,9 ★</strong><span>valoración</span></div>
+          </div>
+          <hr class="hero-card-divider" />
+          <p class="hero-card-caption">Zona de actuación</p>
+          <div class="hero-card-cities">
+            {ciudades.map(c => <span>{c.nombre}</span>)}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-wave" aria-hidden="true">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f8fafc"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ② BENEFICIOS / POR QUÉ ELEGIRNOS ────────────────── -->
+  <section class="sec sec--tint" aria-labelledby="beneficios-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="beneficios-heading">¿Por qué elegirnos para vaciar tu piso en Terrassa?</h2>
+        <p class="section-sub">Más de 10 años vaciando inmuebles en el Vallès Occidental. Equipo propio, sin subcontratas y con gestión de residuos certificada.</p>
+      </div>
+
+      <ul class="benefits-grid" role="list">
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Equipo propio en Terrassa</h3>
+          <p>No subcontratamos. Nuestros operarios son empleados directos con formación y seguro. Trato directo y responsable siempre.</p>
+        </li>
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <h3>Presupuesto en menos de 24 h</h3>
+          <p>Envíanos fotos por WhatsApp y te respondemos con precio cerrado sin visita previa. Sin esperas ni desplazamientos innecesarios.</p>
+        </li>
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+            </svg>
+          </div>
+          <h3>Precio cerrado, sin sorpresas</h3>
+          <p>El presupuesto que aceptas es el precio final. No hay extras ocultos ni costes adicionales al terminar el trabajo.</p>
+        </li>
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+            </svg>
+          </div>
+          <h3>Gestión de residuos certificada</h3>
+          <p>Llevamos todo a gestores autorizados en la provincia de Barcelona. Podemos emitir certificado de gestión si lo necesitas para baja de actividad o herencia.</p>
+        </li>
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+            </svg>
+          </div>
+          <h3>Donamos a entidades sociales</h3>
+          <p>Los muebles y objetos en buen estado los donamos a asociaciones locales de Terrassa y el Vallès. Damos una segunda vida a todo lo que sea reutilizable.</p>
+        </li>
+        <li class="benefit-card">
+          <div class="benefit-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Discreción total en casos sensibles</h3>
+          <p>Herencias, síndrome de Diógenes, desahucios o separaciones. Actuamos con máximo respeto y confidencialidad en situaciones delicadas.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ③ SERVICIOS DETALLADOS ──────────────────────────── -->
+  <section class="sec" aria-labelledby="servicios-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="servicios-heading">Nuestros servicios de vaciado en Terrassa</h2>
+        <p class="section-sub">Vaciado integral, limpieza especializada y pintura express. Todo lo que necesitas para dejar el inmueble listo.</p>
+      </div>
+
+      <p class="srv-grid-intro">
+        Servicios de <a href="/servicios/">vaciado y limpieza en Terrassa</a>. Equipo propio, presupuesto gratuito y gestión de residuos certificada.
+      </p>
+
+      <ul class="srv-grid" role="list">
+        <li class="srv-card srv-card--featured">
+          <div class="srv-card-badge">Más solicitado</div>
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <h3>Vaciado de pisos</h3>
+          <p>Retiramos muebles, electrodomésticos, ropa y enseres. El piso queda vacío y limpio en un solo día. Ideal para herencias, reformas o cambio de inquilino.</p>
+          <ul class="srv-features">
+            <li>✓ Muebles, electrodomésticos y ropa</li>
+            <li>✓ Vaciado completo en un día</li>
+            <li>✓ Limpieza básica incluida</li>
+          </ul>
+          <a href="/terrassa/vaciado-pisos/" class="btn btn-primary">Ver servicio →</a>
+        </li>
+
+        <li class="srv-card">
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Vaciado de locales comerciales</h3>
+          <p>Oficinas, tiendas, almacenes y naves. Desmontamos estanterías y mobiliario fijo. Gestión de residuos con certificado incluido.</p>
+          <ul class="srv-features">
+            <li>✓ Desmontaje de estanterías</li>
+            <li>✓ Certificado de residuos</li>
+            <li>✓ Horario flexible</li>
+          </ul>
+          <a href="/terrassa/vaciado-locales/" class="btn btn-primary">Ver servicio →</a>
+        </li>
+
+        <li class="srv-card">
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6M10 11v6M14 11v6M9 6V4h6v2"/>
+            </svg>
+          </div>
+          <h3>Recogida de muebles sueltos</h3>
+          <p>Sofá, armario, cama, electrodomésticos… Subimos a buscarlos y te quitamos el problema. Sin necesidad de vaciar el piso entero.</p>
+          <ul class="srv-features">
+            <li>✓ Subimos hasta tu piso</li>
+            <li>✓ Precio por volumen</li>
+            <li>✓ Mismo día en muchos casos</li>
+          </ul>
+          <a href="/terrassa/recogida-muebles/" class="btn btn-primary">Ver servicio →</a>
+        </li>
+
+        <li class="srv-card">
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Limpieza síndrome de Diógenes</h3>
+          <p>Actuación discreta en viviendas con acumulación severa. Desinfección, retirada de residuos orgánicos y recuperación completa del inmueble.</p>
+          <ul class="srv-features">
+            <li>✓ Total confidencialidad</li>
+            <li>✓ Desinfección profunda</li>
+            <li>✓ Equipo especializado</li>
+          </ul>
+          <a href="/contacto" class="btn btn-primary">Solicitar presupuesto →</a>
+        </li>
+
+        <li class="srv-card">
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <h3>Limpieza post vaciado</h3>
+          <p>Tras el vaciado, limpieza profunda de suelos, paredes, cocina y baños. El inmueble queda listo para visita, venta o alquiler inmediato.</p>
+          <ul class="srv-features">
+            <li>✓ Limpieza de suelos y paredes</li>
+            <li>✓ Cocina y baños a fondo</li>
+            <li>✓ Combinable con vaciado</li>
+          </ul>
+          <a href="/contacto" class="btn btn-primary">Solicitar presupuesto →</a>
+        </li>
+
+        <li class="srv-card">
+          <div class="srv-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 17l4-8 4 5 3-3 4 6"/><circle cx="12" cy="5" r="2"/>
+            </svg>
+          </div>
+          <h3>Pintura express</h3>
+          <p>Pintamos pisos y locales recién vaciados en 24–48 h con acabado profesional. Ideal para rentabilizar el inmueble lo antes posible.</p>
+          <ul class="srv-features">
+            <li>✓ Acabado en 24–48 h</li>
+            <li>✓ Combinable con vaciado</li>
+            <li>✓ Precio cerrado</li>
+          </ul>
+          <a href="/contacto" class="btn btn-primary">Solicitar presupuesto →</a>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ④ ZONA DE ACTUACIÓN ──────────────────────────────── -->
+  <section class="sec sec--tint" aria-labelledby="zona-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="zona-heading">Zona de actuación: Terrassa y alrededores</h2>
+        <p class="section-sub">Cubrimos Terrassa y {ciudades.length - 1} municipios del Vallès Occidental. Desplazamiento incluido en el presupuesto.</p>
+      </div>
+
+      <ul class="zona-grid" role="list">
+        {ciudades.map(ciudad => (
+          <li class="zona-card">
+            <div class="zona-card-header">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M8 1.5C5.52 1.5 3.5 3.52 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.48-2.02-4.5-4.5-4.5z"/><circle cx="8" cy="6" r="1.5"/>
+              </svg>
+              <strong>{ciudad.nombre}</strong>
+            </div>
+            <ul class="zona-services">
+              {ciudad.servicios.map(s => (
+                <li>
+                  <a href={`/${ciudad.slug}/${s.slug}/`}>{s.nombre} en {ciudad.nombre}</a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
+
+      <div class="zona-barrios">
+        <p class="zona-barrios-label">También en los barrios de Terrassa:</p>
+        <ul class="zona-tags" role="list">
+          {terrassa.zonas.map(z => <li>{z}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ PROCESO DE TRABAJO ─────────────────────────────── -->
+  <section class="sec" aria-labelledby="proceso-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="proceso-heading">Cómo trabajamos: 4 pasos sin complicaciones</h2>
+        <p class="section-sub">Un proceso claro y transparente desde el primer contacto hasta la entrega del inmueble vacío.</p>
+      </div>
+
+      <ol class="proceso-steps">
+        <li>
+          <div class="proceso-num" aria-hidden="true">1</div>
+          <div class="proceso-content">
+            <h3>Contacto y presupuesto gratuito</h3>
+            <p>Llámanos, escríbenos por WhatsApp o rellena el formulario. Envíanos fotos del inmueble y en menos de <strong>24 horas</strong> recibes un presupuesto cerrado y sin letra pequeña.</p>
+          </div>
+        </li>
+        <li>
+          <div class="proceso-num" aria-hidden="true">2</div>
+          <div class="proceso-content">
+            <h3>Confirmación y fecha</h3>
+            <p>Aceptas el presupuesto y fijamos el día. Nos adaptamos a tu disponibilidad, incluidos <strong>fines de semana</strong> si es necesario. No pedimos señal.</p>
+          </div>
+        </li>
+        <li>
+          <div class="proceso-num" aria-hidden="true">3</div>
+          <div class="proceso-content">
+            <h3>Vaciado completo</h3>
+            <p>Nuestro equipo acude puntual, protege escaleras y zonas comunes, y vacía el inmueble de forma ordenada y eficiente. En la mayoría de casos <strong>terminamos en el mismo día</strong>.</p>
+          </div>
+        </li>
+        <li>
+          <div class="proceso-num" aria-hidden="true">4</div>
+          <div class="proceso-content">
+            <h3>Entrega y gestión de residuos</h3>
+            <p>Dejamos el inmueble vacío y con limpieza básica. Los residuos se llevan a gestores autorizados. Si lo necesitas, emitimos <strong>certificado de gestión</strong>.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ⑥ TESTIMONIOS ────────────────────────────────────── -->
+  <section class="sec sec--dark" aria-labelledby="testimonios-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="testimonios-heading">Lo que dicen nuestros clientes en Terrassa</h2>
+        <p class="section-sub-dark">Más de 500 familias y empresas han confiado en nosotros en el Vallès Occidental.</p>
+      </div>
+
+      <div class="testimonios-track" role="list">
+        <article class="testimonio-card" role="listitem">
+          <div class="testimonio-stars" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>
+            <p>"Vaciaron el piso de mi madre en un solo día. Puntuales, limpios y muy amables. Se llevaron todo sin dejar rastro y donaron los muebles en buen estado. 100% recomendables."</p>
+          </blockquote>
+          <footer>
+            <div class="testimonio-avatar">MC</div>
+            <div>
+              <cite class="testimonio-nombre">Marta C.</cite>
+              <span class="testimonio-lugar">Terrassa · Vaciado de piso</span>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonio-card" role="listitem">
+          <div class="testimonio-stars" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>
+            <p>"Necesitaba vaciar un local antes de entregar las llaves. Me dieron presupuesto el mismo día y lo tuvieron listo en 48 horas. Precio justo y sin sorpresas."</p>
+          </blockquote>
+          <footer>
+            <div class="testimonio-avatar">JR</div>
+            <div>
+              <cite class="testimonio-nombre">Jordi R.</cite>
+              <span class="testimonio-lugar">Sabadell · Vaciado de local</span>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonio-card" role="listitem">
+          <div class="testimonio-stars" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>
+            <p>"Recogieron un sofá, dos armarios y varios electrodomésticos. Subieron hasta el tercero sin ascensor sin ningún problema. Rápido, económico y muy profesional."</p>
+          </blockquote>
+          <footer>
+            <div class="testimonio-avatar">AL</div>
+            <div>
+              <cite class="testimonio-nombre">Anna L.</cite>
+              <span class="testimonio-lugar">Rubí · Recogida de muebles</span>
+            </div>
+          </footer>
+        </article>
+
+        <article class="testimonio-card" role="listitem">
+          <div class="testimonio-stars" aria-label="5 estrellas">★★★★★</div>
+          <blockquote>
+            <p>"Tras el fallecimiento de mi padre tuve que gestionar el vaciado de su piso. El equipo fue muy respetuoso y eficiente. Me quitaron un gran peso en un momento difícil."</p>
+          </blockquote>
+          <footer>
+            <div class="testimonio-avatar">PG</div>
+            <div>
+              <cite class="testimonio-nombre">Pere G.</cite>
+              <span class="testimonio-lugar">Sant Quirze · Vaciado de piso</span>
+            </div>
+          </footer>
+        </article>
+      </div>
+
+      <div class="testimonio-hint" aria-hidden="true">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8l6 6 6-6"/></svg>
+        Desliza para ver más
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ PRECIOS ORIENTATIVOS ───────────────────────────── -->
+  <section class="sec sec--tint" aria-labelledby="precios-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="precios-heading">Precios orientativos del vaciado en Terrassa</h2>
+        <p class="section-sub">Presupuesto final gratuito y sin compromiso. Estos precios son orientativos — el coste real depende del volumen y accesibilidad.</p>
+      </div>
+
+      <ul class="precios-grid" role="list">
+        <li class="precio-card">
+          <div class="precio-tipo">Habitación o estudio</div>
+          <div class="precio-desde">desde</div>
+          <div class="precio-valor">150 €</div>
+          <ul class="precio-incl">
+            <li>Hasta 20 m²</li>
+            <li>Muebles y enseres básicos</li>
+            <li>1–2 operarios, ½ día</li>
+            <li>Gestión de residuos</li>
+          </ul>
+          <a href={`tel:${terrassa.telefono.replace(/\s/g,'')}`} class="btn btn-primary btn-full">Pedir precio exacto</a>
+        </li>
+
+        <li class="precio-card precio-card--highlight">
+          <div class="precio-badge">Más popular</div>
+          <div class="precio-tipo">Piso 3 habitaciones</div>
+          <div class="precio-desde">desde</div>
+          <div class="precio-valor">300 €</div>
+          <ul class="precio-incl">
+            <li>70–90 m² amueblado</li>
+            <li>Todo incluido: muebles, electrodom., ropa</li>
+            <li>Equipo de 3, jornada completa</li>
+            <li>Gestión de residuos + limpieza básica</li>
+          </ul>
+          <a href={`tel:${terrassa.telefono.replace(/\s/g,'')}`} class="btn btn-white btn-full">Pedir precio exacto</a>
+        </li>
+
+        <li class="precio-card">
+          <div class="precio-tipo">Local o nave</div>
+          <div class="precio-desde">desde</div>
+          <div class="precio-valor">400 €</div>
+          <ul class="precio-incl">
+            <li>Hasta 100 m²</li>
+            <li>Estanterías, mobiliario de ofic.</li>
+            <li>Equipo de 3–4, jornada completa</li>
+            <li>Certificado de gestión incluido</li>
+          </ul>
+          <a href={`tel:${terrassa.telefono.replace(/\s/g,'')}`} class="btn btn-primary btn-full">Pedir precio exacto</a>
+        </li>
+      </ul>
+
+      <p class="precios-aviso">
+        * Precios orientativos para Terrassa. El presupuesto definitivo se calcula según el volumen real, accesibilidad y distancia al punto limpio. Siempre gratuito y sin compromiso.
+      </p>
+    </div>
+  </section>
+
+  <!-- ⑧ FAQ ESPECÍFICAS ────────────────────────────────── -->
+  <section class="sec" aria-labelledby="faq-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="faq-heading">Preguntas frecuentes sobre vaciado de pisos en Terrassa</h2>
+        <p class="section-sub">Resolvemos las dudas más habituales antes de contratar el servicio.</p>
+      </div>
+
+      <div class="faq-list">
+        {faqs.map((faq, i) => (
+          <details class="faq-item" open={i === 0 || undefined}>
+            <summary>
+              <span>{faq.pregunta}</span>
+              <svg class="faq-chevron" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M5 8l5 5 5-5"/>
+              </svg>
+            </summary>
+            <p>{faq.respuesta}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑨ CTA FINAL + CONTACTO ───────────────────────────── -->
+  <section class="sec sec--dark cta-final" id="contacto-form" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-grid">
+
+        <!-- Formulario -->
+        <div class="cta-form-wrap">
+          <h2 id="cta-heading">Pide tu presupuesto gratuito ahora</h2>
+          <p class="cta-form-sub">Sin compromiso. Te respondemos en menos de 24 horas laborables.</p>
+
+          <form
+            class="cta-form"
+            name="contacto-home"
+            method="POST"
+            action="/gracias/"
+            data-netlify="true"
+            netlify-honeypot="bot-field"
+            novalidate
+          >
+            <input type="hidden" name="form-name" value="contacto-home" />
+            <p class="visually-hidden">
+              <label>No rellenar: <input name="bot-field" /></label>
+            </p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="nombre">Nombre <abbr title="Obligatorio">*</abbr></label>
+                <input id="nombre" name="nombre" type="text" placeholder="Tu nombre" required autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="telefono">Teléfono <abbr title="Obligatorio">*</abbr></label>
+                <input id="telefono" name="telefono" type="tel" placeholder="+34 600 000 000" required autocomplete="tel" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="servicio-form">Servicio <abbr title="Obligatorio">*</abbr></label>
+              <select id="servicio-form" name="servicio" required>
+                <option value="">¿Qué necesitas?</option>
+                <option value="vaciado-piso">Vaciado de piso</option>
+                <option value="vaciado-local">Vaciado de local</option>
+                <option value="recogida-muebles">Recogida de muebles sueltos</option>
+                <option value="limpieza-diogenes">Limpieza síndrome de Diógenes</option>
+                <option value="limpieza-post-vaciado">Limpieza post vaciado</option>
+                <option value="pintura-express">Pintura express</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="mensaje-form">Cuéntanos más <span class="form-optional">(opcional)</span></label>
+              <textarea id="mensaje-form" name="mensaje" rows="3" placeholder="Tamaño aproximado, ciudad, urgencia…"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-full">
+              Enviar solicitud de presupuesto →
+            </button>
+            <p class="form-legal">
+              Al enviar aceptas nuestra <a href="/privacidad/">política de privacidad</a>.
+            </p>
+          </form>
+        </div>
+
+        <!-- Datos de contacto -->
+        <aside class="cta-contact">
+          <h3>Contacto directo</h3>
+
+          <address class="cta-address">
+            <a href={`tel:${terrassa.telefono.replace(/\s/g,'')}`} class="cta-contact-item cta-contact-item--primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
+              </svg>
+              <div>
+                <span class="cta-contact-label">Llamar ahora</span>
+                <span class="cta-contact-value">{terrassa.telefono}</span>
+              </div>
+            </a>
+
+            <a
+              href={`https://wa.me/${siteConfig.whatsapp}?text=Hola%2C%20quiero%20un%20presupuesto%20para%20vaciado%20en%20Terrassa`}
+              class="cta-contact-item"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.135.561 4.14 1.542 5.876L0 24l6.312-1.518A11.956 11.956 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.897 0-3.67-.502-5.2-1.376L3 22l1.395-4.698A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              <div>
+                <span class="cta-contact-label">WhatsApp</span>
+                <span class="cta-contact-value">Escríbenos ahora</span>
+              </div>
+            </a>
+
+            <div class="cta-contact-item cta-contact-item--info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+              <div>
+                <span class="cta-contact-label">Dirección</span>
+                <span class="cta-contact-value">{terrassa.direccion}, {terrassa.codigoPostal} {terrassa.nombre}</span>
+              </div>
+            </div>
+
+            <div class="cta-contact-item cta-contact-item--info">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <div>
+                <span class="cta-contact-label">Horario</span>
+                <span class="cta-contact-value">{siteConfig.horarioTexto}</span>
+              </div>
+            </div>
+          </address>
+
+          <div class="cta-trust">
+            <div class="trust-item"><span aria-hidden="true">✓</span> Presupuesto gratuito en 24 h</div>
+            <div class="trust-item"><span aria-hidden="true">✓</span> Sin compromiso</div>
+            <div class="trust-item"><span aria-hidden="true">✓</span> Equipo propio certificado</div>
+            <div class="trust-item"><span aria-hidden="true">✓</span> Gestión de residuos legalizada</div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ══════════════════════════════════════════════════════
+     SECCIONES BASE
+  ══════════════════════════════════════════════════════ */
+  .sec          { padding-block: 4.5rem; }
+  .sec--tint    { background: var(--c-bg-tint); }
+  .sec--dark    { background: var(--c-bg-dark); }
+  @media (max-width: 768px) { .sec { padding-block: 3rem; } }
+
+  .section-sub-dark {
+    color: rgba(255,255,255,.6);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-top: .75rem;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     HERO
+  ══════════════════════════════════════════════════════ */
+  .hero {
+    background: linear-gradient(150deg, #0d1b3e 0%, #0f2a5c 50%, #0057ff 100%);
+    padding-block: 5.5rem 0;
+    margin-top: var(--header-h);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 75% 10%, rgba(0,100,255,.3) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 40% at 15% 90%, rgba(80,80,200,.18) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-bottom: 4.5rem;
+    position: relative;
+    z-index: 1;
+  }
+  @media (min-width: 920px) {
+    .hero-inner { grid-template-columns: 1fr 340px; align-items: center; gap: 4rem; }
+  }
+
+  .hero-text { color: #fff; }
+  .hero-eyebrow {
+    color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .hero-text h1 { color: #fff; margin-block: .75rem 1rem; }
+  .hero-h1-accent {
+    background: linear-gradient(90deg, #93c5fd, #c4b5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,.78);
+    line-height: 1.75;
+    max-width: 520px;
+    margin-bottom: 2rem;
+  }
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 480px) {
+    .hero-ctas { flex-direction: column; }
+    .hero-ctas .btn { width: 100%; justify-content: center; }
+  }
+  .hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    list-style: none;
+  }
+  .hero-badges li {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    font-size: .78rem;
+    font-weight: 500;
+    color: rgba(255,255,255,.88);
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 100px;
+    padding: .3rem .8rem;
+    white-space: nowrap;
+  }
+
+  /* Tarjeta lateral del hero */
+  .hero-card {
+    background: rgba(255,255,255,.08);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: var(--r-xl);
+    padding: 1.75rem;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .hero-card-header {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .72rem;
+    font-weight: 600;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+  .status-dot {
+    width: 8px; height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.25);
+    animation: pulse 2.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; box-shadow:0 0 0 3px rgba(34,197,94,.25); }
+    50%      { opacity:.7; box-shadow:0 0 0 7px rgba(34,197,94,.08); }
+  }
+  .hero-card-stat {
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -.04em;
+    line-height: 1;
+    color: #fff;
+  }
+  .hero-card-label { font-size: .82rem; color: rgba(255,255,255,.45); margin: .25rem 0 1.25rem; }
+  .hero-card-metrics {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: .5rem;
+    margin-bottom: 1.25rem;
+  }
+  .hero-card-metrics > div {
+    background: rgba(255,255,255,.08);
+    border-radius: 10px;
+    padding: .65rem .5rem;
+    text-align: center;
+  }
+  .hero-card-metrics strong { display:block; font-size:.95rem; font-weight:700; }
+  .hero-card-metrics span   { font-size:.66rem; color:rgba(255,255,255,.4); text-transform:uppercase; letter-spacing:.04em; }
+  .hero-card-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,.1);
+    margin-bottom: 1rem;
+  }
+  .hero-card-caption { font-size:.68rem; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.07em; margin-bottom:.6rem; }
+  .hero-card-cities  { display:flex; flex-wrap:wrap; gap:.3rem; }
+  .hero-card-cities span {
+    font-size:.73rem; font-weight:500;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:100px;
+    padding:.15rem .55rem;
+    color:rgba(255,255,255,.8);
+  }
+
+  /* Ola de transición hero → contenido */
+  .hero-wave { line-height: 0; position: relative; z-index: 1; }
+  .hero-wave svg { width: 100%; height: 80px; display: block; }
+
+  @media (max-width: 768px) {
+    .hero { padding-block: 4rem 0; }
+    .hero-inner { padding-bottom: 3.5rem; gap: 2rem; }
+    .hero-visual { display: none; }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     BENEFICIOS
+  ══════════════════════════════════════════════════════ */
+  .benefits-grid {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 580px)  { .benefits-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1000px) { .benefits-grid { grid-template-columns: repeat(3,1fr); } }
+
+  .benefit-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    transition: box-shadow .2s, transform .2s, border-color .2s;
+  }
+  .benefit-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.09);
+    transform: translateY(-3px);
+    border-color: #bfdbfe;
+  }
+  .benefit-icon { width: 2.5rem; height: 2.5rem; color: var(--c-primary); }
+  .benefit-icon svg { width: 100%; height: 100%; }
+  .benefit-card h3 { font-size: .95rem; font-weight: 700; }
+  .benefit-card p { font-size: .875rem; color: var(--c-text-m); line-height: 1.65; margin: 0; flex: 1; }
+
+  /* ══════════════════════════════════════════════════════
+     SERVICIOS
+  ══════════════════════════════════════════════════════ */
+  .srv-grid-intro {
+    font-size: .9rem;
+    color: var(--c-text-m);
+    margin-bottom: 1.5rem;
+  }
+
+  .srv-grid {
+    list-style: none;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px)  { .srv-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1000px) { .srv-grid { grid-template-columns: repeat(3,1fr); } }
+
+  .srv-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 1.75rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0,0,0,.05);
+    transition: box-shadow .2s, transform .2s, border-color .2s;
+  }
+  .srv-card:hover {
+    box-shadow: 0 4px 20px rgba(0,0,0,.09);
+    transform: translateY(-3px);
+    border-color: #bfdbfe;
+  }
+  .srv-card--featured {
+    border-color: var(--c-primary);
+    border-width: 2px;
+    background: var(--c-primary-l);
+    box-shadow: 0 4px 20px rgba(0,87,255,.12);
+  }
+  .srv-card--featured:hover {
+    box-shadow: 0 8px 30px rgba(0,87,255,.2);
+    border-color: var(--c-primary);
+  }
+  .srv-card-badge {
+    position: absolute;
+    top: -1px; right: 1.25rem;
+    background: var(--c-primary);
+    color: #fff;
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    padding: .2rem .75rem;
+    border-radius: 0 0 7px 7px;
+  }
+  .srv-icon { width: 2.5rem; height: 2.5rem; color: var(--c-primary); }
+  .srv-icon svg { width: 100%; height: 100%; }
+  .srv-card h3 { font-size: 1rem; font-weight: 700; }
+  .srv-card > p { font-size: .875rem; color: var(--c-text-m); line-height: 1.65; margin: 0; flex: 1; }
+  .srv-card--featured > p { color: var(--c-text); }
+  .srv-features { list-style: none; display: flex; flex-direction: column; gap: .35rem; margin-top: .1rem; }
+  .srv-features li {
+    font-size: .82rem;
+    color: var(--c-text-m);
+    padding-left: 1.1rem;
+    position: relative;
+  }
+  .srv-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--c-primary);
+    font-weight: 700;
+  }
+  .srv-card--featured .srv-features li { color: var(--c-text); }
+  .srv-card--featured .srv-features li::before { color: var(--c-primary); }
+
+  /* ══════════════════════════════════════════════════════
+     ZONA DE ACTUACIÓN
+  ══════════════════════════════════════════════════════ */
+  .zona-grid {
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(2,1fr);
+    margin-bottom: 2.5rem;
+  }
+  @media (min-width: 640px)  { .zona-grid { grid-template-columns: repeat(3,1fr); } }
+  @media (min-width: 1000px) { .zona-grid { grid-template-columns: repeat(4,1fr); } }
+
+  .zona-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    padding: 1rem 1.1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,.04);
+    transition: box-shadow .2s, border-color .2s, transform .2s;
+  }
+  .zona-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    border-color: #bfdbfe;
+    transform: translateY(-2px);
+  }
+  .zona-card-header {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    font-size: .88rem;
+    font-weight: 700;
+    margin-bottom: .6rem;
+  }
+  .zona-card-header svg { width: 13px; height: 13px; color: var(--c-primary); flex-shrink: 0; }
+  .zona-services { list-style: none; display: flex; flex-direction: column; gap: .2rem; }
+  .zona-services a { font-size: .78rem; color: var(--c-text-m); transition: color .15s; }
+  .zona-services a::before { content: '→ '; opacity: .4; }
+  .zona-services a:hover { color: var(--c-primary); text-decoration: none; }
+
+  .zona-barrios { border-top: 1px solid var(--c-border); padding-top: 1.75rem; }
+  .zona-barrios-label {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--c-text-m);
+    margin-bottom: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+  }
+  .zona-tags { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; }
+  .zona-tags li {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: 20px;
+    padding: .25rem .8rem;
+    font-size: .8rem;
+    color: var(--c-text-m);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     PROCESO
+  ══════════════════════════════════════════════════════ */
+  .proceso-steps {
+    list-style: none;
+    display: grid;
+    gap: 2rem;
+    max-width: 880px;
+    margin-inline: auto;
+  }
+  @media (min-width: 640px) { .proceso-steps { grid-template-columns: repeat(2,1fr); gap: 2rem 3rem; } }
+
+  .proceso-steps li {
+    display: flex;
+    gap: 1.1rem;
+    align-items: flex-start;
+  }
+  .proceso-num {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: .95rem;
+    box-shadow: 0 4px 12px rgba(0,87,255,.3);
+  }
+  .proceso-content h3 { font-size: .95rem; font-weight: 700; margin-bottom: .4rem; }
+  .proceso-content p  { font-size: .875rem; color: var(--c-text-m); line-height: 1.65; margin: 0; }
+
+  /* ══════════════════════════════════════════════════════
+     TESTIMONIOS
+  ══════════════════════════════════════════════════════ */
+  .testimonios-track {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (max-width: 640px) {
+    .testimonios-track {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  @media (min-width: 900px) {
+    .testimonios-track { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .testimonio-card {
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--r-lg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background .2s, border-color .2s;
+  }
+  .testimonio-card:hover {
+    background: rgba(255,255,255,.11);
+    border-color: rgba(255,255,255,.22);
+  }
+  .testimonio-stars { color: #fbbf24; font-size: .95rem; letter-spacing: .08em; }
+  .testimonio-card blockquote { margin: 0; flex: 1; }
+  .testimonio-card blockquote p {
+    font-size: .875rem;
+    color: rgba(255,255,255,.78);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .testimonio-card footer {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255,255,255,.1);
+  }
+  .testimonio-avatar {
+    flex-shrink: 0;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--c-primary), #7c3aed);
+    color: #fff;
+    font-size: .78rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .testimonio-nombre { display: block; font-style: normal; font-weight: 600; font-size: .88rem; color: #fff; }
+  .testimonio-lugar  { font-size: .75rem; color: rgba(255,255,255,.45); }
+  /* Ocultar el hint de scroll (ya no hay scroll horizontal) */
+  .testimonio-hint { display: none; }
+
+  /* ══════════════════════════════════════════════════════
+     PRECIOS
+  ══════════════════════════════════════════════════════ */
+  .precios-grid {
+    list-style: none;
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    max-width: 880px;
+    margin-inline: auto;
+    align-items: start;
+  }
+  @media (min-width: 640px) {
+    .precios-grid {
+      grid-template-columns: repeat(3,1fr);
+      align-items: stretch;
+    }
+  }
+
+  .precio-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .2s, transform .2s;
+  }
+  .precio-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,.1);
+    transform: translateY(-3px);
+  }
+
+  .precio-card--highlight {
+    background: var(--c-primary);
+    border-color: var(--c-primary);
+    color: #fff;
+    box-shadow: 0 8px 32px rgba(0,87,255,.35);
+    padding-top: 2.5rem;
+  }
+  .precio-card--highlight:hover {
+    box-shadow: 0 12px 40px rgba(0,87,255,.45);
+    transform: translateY(-3px);
+  }
+
+  .precio-badge {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    background: #fbbf24;
+    color: #1a1a2e;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .3rem .9rem;
+    border-radius: 0 0 8px 8px;
+    white-space: nowrap;
+  }
+  .precio-tipo {
+    font-size: .82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--c-text-m);
+  }
+  .precio-card--highlight .precio-tipo { color: rgba(255,255,255,.75); }
+  .precio-desde { font-size: .75rem; color: var(--c-text-l); }
+  .precio-card--highlight .precio-desde { color: rgba(255,255,255,.55); }
+  .precio-valor {
+    font-size: 2.75rem;
+    font-weight: 800;
+    color: var(--c-text);
+    letter-spacing: -.04em;
+    line-height: 1;
+  }
+  .precio-card--highlight .precio-valor { color: #fff; }
+  .precio-incl {
+    list-style: none;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: .45rem;
+    flex: 1;
+  }
+  .precio-incl li {
+    font-size: .82rem;
+    color: var(--c-text-m);
+    padding-left: 1.15rem;
+    position: relative;
+    line-height: 1.4;
+  }
+  .precio-incl li::before { content: '✓'; position: absolute; left: 0; color: var(--c-primary); font-weight: 700; }
+  .precio-card--highlight .precio-incl li { color: rgba(255,255,255,.88); }
+  .precio-card--highlight .precio-incl li::before { color: #fbbf24; }
+  .btn-full { width: 100%; justify-content: center; }
+  .precios-aviso {
+    text-align: center;
+    font-size: .78rem;
+    color: var(--c-text-l);
+    margin-top: 1.5rem;
+    max-width: 620px;
+    margin-inline: auto;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     FAQ
+  ══════════════════════════════════════════════════════ */
+  .faq-list {
+    max-width: 760px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .faq-item {
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    transition: box-shadow .2s, border-color .2s;
+  }
+  .faq-item:hover { border-color: #bfdbfe; }
+  .faq-item[open] {
+    box-shadow: 0 2px 12px rgba(0,0,0,.07);
+    border-color: #bfdbfe;
+  }
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 1.4rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: .92rem;
+    list-style: none;
+    user-select: none;
+    background: var(--c-bg);
+    transition: background .15s;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover { background: var(--c-bg-tint); }
+  .faq-item[open] summary { background: var(--c-primary-l); color: var(--c-primary); }
+  .faq-chevron { flex-shrink: 0; width: 18px; height: 18px; transition: transform .25s; color: var(--c-text-l); }
+  .faq-item[open] .faq-chevron { transform: rotate(180deg); color: var(--c-primary); }
+  .faq-item p {
+    padding: 1rem 1.4rem 1.25rem;
+    font-size: .9rem;
+    color: var(--c-text-m);
+    line-height: 1.7;
+    border-top: 1px solid var(--c-border);
+    margin: 0;
+    background: var(--c-bg);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     CTA FINAL + CONTACTO
+  ══════════════════════════════════════════════════════ */
+  .cta-final { scroll-margin-top: var(--header-h); }
+
+  .cta-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 860px) { .cta-grid { grid-template-columns: 1.3fr 1fr; gap: 4rem; } }
+
+  .cta-form-wrap h2 {
+    color: #fff;
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    margin-bottom: .5rem;
+  }
+  .cta-form-sub {
+    color: rgba(255,255,255,.6);
+    font-size: .95rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .cta-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; gap: 1rem; }
+  @media (min-width: 480px) { .form-row { grid-template-columns: 1fr 1fr; } }
+  .form-group { display: flex; flex-direction: column; gap: .35rem; }
+  .form-group label { font-size: .82rem; font-weight: 600; color: rgba(255,255,255,.8); }
+  .form-group label abbr { text-decoration: none; color: #93c5fd; margin-inline-start: .15rem; }
+  .form-optional { font-weight: 400; color: rgba(255,255,255,.35); }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: var(--font);
+    font-size: .92rem;
+    color: var(--c-text);
+    background: #fff;
+    border: 1.5px solid rgba(255,255,255,.15);
+    border-radius: var(--r-sm);
+    padding: .7rem .9rem;
+    width: 100%;
+    outline: none;
+    appearance: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .form-group textarea { resize: vertical; min-height: 90px; }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: #93c5fd;
+    box-shadow: 0 0 0 3px rgba(147,197,253,.2);
+  }
+  .form-group select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2394a3b8'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px;
+    padding-right: 2.5rem;
+    cursor: pointer;
+    background-color: #fff;
+  }
+  .form-legal {
+    font-size: .72rem;
+    color: rgba(255,255,255,.3);
+    text-align: center;
+    line-height: 1.5;
+  }
+  .form-legal a { color: rgba(255,255,255,.4); text-decoration: underline; }
+
+  /* Contacto lateral */
+  .cta-contact h3 { color: #fff; font-size: 1.05rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .cta-address {
+    font-style: normal;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-contact-item {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    background: rgba(255,255,255,.07);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--r-md);
+    padding: .85rem 1rem;
+    text-decoration: none;
+    transition: background .15s, border-color .15s;
+  }
+  .cta-contact-item:hover {
+    background: rgba(255,255,255,.12);
+    border-color: rgba(255,255,255,.22);
+    text-decoration: none;
+  }
+  .cta-contact-item--primary {
+    border-color: rgba(147,197,253,.35);
+    background: rgba(0,87,255,.22);
+  }
+  .cta-contact-item--primary:hover {
+    background: rgba(0,87,255,.32);
+  }
+  .cta-contact-item--info { cursor: default; }
+  .cta-contact-item svg { flex-shrink: 0; width: 20px; height: 20px; color: #93c5fd; }
+  .cta-contact-label {
+    display: block;
+    font-size: .68rem;
+    color: rgba(255,255,255,.4);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+  }
+  .cta-contact-value {
+    display: block;
+    font-size: .9rem;
+    font-weight: 600;
+    color: #fff;
+    margin-top: .1rem;
+  }
+
+  .cta-trust {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+  }
+  .trust-item {
+    font-size: .8rem;
+    color: rgba(255,255,255,.5);
+    display: flex;
+    align-items: flex-start;
+    gap: .4rem;
+    line-height: 1.4;
+  }
+  .trust-item span { color: #4ade80; font-weight: 700; flex-shrink: 0; }
+
+  /* Accesibilidad — honeypot */
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+  }
+</style>

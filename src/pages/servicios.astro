@@ -1,0 +1,416 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ciudades, EMPRESA } from '../data/index';
+import { servicios as catalogoServicios } from '../data/servicios';
+
+const title       = `Servicios | ${EMPRESA.nombre}`;
+const description = `Instalación, mantenimiento y reparación en ${ciudades.map(c=>c.nombre).join(', ')}. Técnicos certificados, presupuesto gratuito y garantía por escrito.`;
+
+const iconos: Record<string, string> = {
+  instalacion: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`,
+  mantenimiento: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`,
+  reparacion:    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>`,
+};
+
+// Strip interpolation placeholders for the generic /servicios page
+function stripPlaceholders(text: string) {
+  return text
+    .replace(/\{ciudad\}/g, 'tu ciudad')
+    .replace(/\{provincia\}/g, 'tu provincia')
+    .replace(/\{empresa\}/g, EMPRESA.nombre);
+}
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- Page header -->
+  <div class="page-header">
+    <div class="container">
+      <span class="eyebrow">Nuestros servicios</span>
+      <h1>Servicios profesionales a tu medida</h1>
+      <p class="page-header-sub">
+        Técnicos certificados, presupuesto gratuito y garantía por escrito
+        en {ciudades.map(c => c.nombre).join(', ')}.
+      </p>
+    </div>
+  </div>
+
+  <!-- Service cards -->
+  <section class="page-section" aria-label="Catálogo de servicios">
+    <div class="container">
+      <div class="srv-grid">
+        {catalogoServicios.map(servicio => (
+          <article class="srv-card">
+
+            <!-- Icon + title -->
+            <div class="srv-card-top">
+              <div class="srv-icon" aria-hidden="true" set:html={iconos[servicio.slug] ?? ''} />
+              <h2>{servicio.nombre}</h2>
+            </div>
+
+            <!-- Description -->
+            <p class="srv-desc">{stripPlaceholders(servicio.descripcionLarga)}</p>
+
+            <!-- Benefits checklist -->
+            <ul class="srv-benefits" aria-label={`Ventajas de ${servicio.nombre}`}>
+              {servicio.beneficios.map(b => (
+                <li>
+                  <svg class="srv-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="2.5 8.5 6.5 12.5 13.5 4.5"/>
+                  </svg>
+                  {stripPlaceholders(b)}
+                </li>
+              ))}
+            </ul>
+
+            <!-- CTAs -->
+            <div class="srv-ctas">
+              <a href="/contacto" class="btn btn-primary">Solicitar presupuesto</a>
+              <a href={`#ciudades-${servicio.slug}`} class="btn btn-outline">Ver ciudades ↓</a>
+            </div>
+
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- City links per service -->
+  {catalogoServicios.map(servicio => (
+    <section
+      id={`ciudades-${servicio.slug}`}
+      class="page-section page-section--tinted srv-city-section"
+      aria-labelledby={`heading-${servicio.slug}`}
+    >
+      <div class="container">
+        <div class="section-header">
+          <h2 id={`heading-${servicio.slug}`}>{servicio.nombre} por ciudad</h2>
+          <p class="section-sub">
+            Selecciona tu ciudad para ver disponibilidad, zonas cubiertas y solicitar presupuesto.
+          </p>
+        </div>
+
+        <ul class="city-link-grid">
+          {ciudades
+            .filter(ciudad => ciudad.servicios.some(s => s.slug === servicio.slug))
+            .map(ciudad => (
+              <li>
+                <a href={`/${ciudad.slug}/${servicio.slug}/`} class="city-link-card">
+                  <span class="city-link-name">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                      <path d="M8 1.5C5.52 1.5 3.5 3.52 3.5 6c0 3.75 4.5 8.5 4.5 8.5s4.5-4.75 4.5-8.5c0-2.48-2.02-4.5-4.5-4.5z"/>
+                      <circle cx="8" cy="6" r="1.5"/>
+                    </svg>
+                    {ciudad.nombre}
+                  </span>
+                  <span class="city-link-sub">{ciudad.provincia}</span>
+                  <svg class="city-link-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <path d="M3 8h10M9 4l4 4-4 4"/>
+                  </svg>
+                </a>
+              </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
+
+  <!-- Process overview -->
+  <section class="page-section" aria-labelledby="proceso-heading">
+    <div class="container">
+      <div class="section-header">
+        <h2 id="proceso-heading">Cómo trabajamos</h2>
+        <p class="section-sub">Un proceso claro y sin sorpresas desde el primer contacto.</p>
+      </div>
+      <ol class="process-steps">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <h3>Contacto y presupuesto gratuito</h3>
+            <p>Llámanos, escríbenos por WhatsApp o rellena el formulario. En menos de 24 horas recibes un presupuesto detallado y sin compromiso.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <h3>Visita técnica</h3>
+            <p>Un técnico certificado acude a tu domicilio o negocio, evalúa el trabajo y confirma el presupuesto antes de comenzar.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <h3>Ejecución con materiales de calidad</h3>
+            <p>Realizamos el trabajo en los plazos acordados, con materiales homologados y respetando tu espacio.</p>
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div>
+            <h3>Entrega y garantía por escrito</h3>
+            <p>Verificamos que todo funciona correctamente y te entregamos la garantía y la documentación del trabajo realizado.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="page-section srv-cta-section" aria-label="Llamada a la acción">
+    <div class="container">
+      <div class="srv-cta-box">
+        <div class="srv-cta-text">
+          <h2>¿Listo para solicitar tu presupuesto?</h2>
+          <p>Respondemos en menos de 24 horas. Sin compromiso, sin letra pequeña.</p>
+        </div>
+        <div class="srv-cta-btns">
+          <a href="/contacto" class="btn btn-white btn-lg">Solicitar presupuesto →</a>
+          <a
+            href={`https://wa.me/${EMPRESA.whatsapp}?text=Hola%2C%20quiero%20solicitar%20un%20presupuesto`}
+            class="btn btn-whatsapp btn-lg"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            💬 WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ── Page header ── */
+  .page-header {
+    margin-top: var(--header-h);
+    background: linear-gradient(150deg, #0d1b3e 0%, #0f2a5c 50%, #0057ff 100%);
+    padding-block: 4.5rem 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 75% 15%, rgba(0,100,255,.3) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 40% at 15% 85%, rgba(80,80,200,.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page-header .container { position: relative; z-index: 1; }
+  .page-header .eyebrow {
+    color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .page-header h1 { color: #fff; margin-bottom: .75rem; margin-top: .5rem; }
+  .page-header-sub {
+    color: rgba(255,255,255,.72);
+    font-size: 1rem;
+    max-width: 580px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+
+  /* ── Service cards grid ── */
+  .srv-grid {
+    display: grid;
+    gap: 1.75rem;
+  }
+  @media (min-width: 720px) { .srv-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .srv-card {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-lg);
+    padding: 2rem 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .srv-card:hover { box-shadow: var(--sh-card); transform: translateY(-2px); }
+
+  .srv-card-top { display: flex; align-items: center; gap: .9rem; }
+  .srv-icon { width: 2.25rem; height: 2.25rem; color: var(--c-primary); flex-shrink: 0; }
+  .srv-icon :global(svg) { width: 100%; height: 100%; }
+  .srv-card-top h2 { font-size: 1.2rem; margin: 0; }
+
+  .srv-desc {
+    font-size: .9rem;
+    color: var(--c-text-m);
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  /* Benefits checklist */
+  .srv-benefits {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+    flex: 1;
+  }
+  .srv-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: .55rem;
+    font-size: .87rem;
+    line-height: 1.5;
+    color: var(--c-text);
+  }
+  .srv-check {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    color: var(--c-primary);
+    margin-top: .1rem;
+  }
+
+  /* Card CTAs */
+  .srv-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: auto;
+    padding-top: .25rem;
+  }
+  .btn-outline {
+    display: inline-block;
+    padding: .6rem 1.1rem;
+    border-radius: 7px;
+    font-weight: 600;
+    font-size: .88rem;
+    text-decoration: none;
+    border: 1.5px solid var(--c-border);
+    color: var(--c-text);
+    transition: border-color .15s, background .15s;
+  }
+  .btn-outline:hover { border-color: var(--c-primary); color: var(--c-primary); background: var(--c-primary-l); text-decoration: none; }
+
+  /* ── City link sections ── */
+  .srv-city-section { scroll-margin-top: calc(var(--header-h) + 1rem); }
+
+  .city-link-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: .75rem;
+  }
+
+  .city-link-card {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    padding: .85rem 1rem;
+    text-decoration: none;
+    transition: border-color .15s, box-shadow .15s, transform .15s;
+    color: var(--c-text);
+  }
+  .city-link-card:hover {
+    border-color: var(--c-primary);
+    box-shadow: 0 2px 12px rgba(0,87,255,.1);
+    transform: translateY(-1px);
+    text-decoration: none;
+    color: var(--c-primary);
+  }
+  .city-link-card:hover .city-link-sub { color: var(--c-primary); opacity: .7; }
+
+  .city-link-name {
+    display: flex;
+    align-items: center;
+    gap: .35rem;
+    font-weight: 600;
+    font-size: .9rem;
+    flex: 1;
+  }
+  .city-link-name svg { width: 14px; height: 14px; opacity: .5; flex-shrink: 0; }
+
+  .city-link-sub {
+    font-size: .72rem;
+    color: var(--c-text-l);
+    white-space: nowrap;
+  }
+
+  .city-link-arrow {
+    width: 16px;
+    height: 16px;
+    opacity: .35;
+    flex-shrink: 0;
+  }
+
+  /* ── Process steps ── */
+  .process-steps {
+    list-style: none;
+    display: grid;
+    gap: 1.5rem;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+  @media (min-width: 640px) { .process-steps { grid-template-columns: 1fr 1fr; } }
+
+  .process-steps li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .step-num {
+    flex-shrink: 0;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: var(--c-primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: .9rem;
+  }
+  .process-steps h3 { display: block; margin-bottom: .3rem; font-size: .95rem; font-weight: 700; }
+  .process-steps p { font-size: .875rem; color: var(--c-text-m); line-height: 1.65; margin: 0; }
+
+  /* ── CTA final ── */
+  .srv-cta-section { padding-bottom: 4rem; }
+
+  .srv-cta-box {
+    background: linear-gradient(135deg, var(--c-primary) 0%, #0040c8 100%);
+    border-radius: var(--r-xl);
+    padding: 3rem 2.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .srv-cta-text h2 { color: #fff; font-size: 1.5rem; margin-bottom: .5rem; }
+  .srv-cta-text p  { color: rgba(255,255,255,.8); font-size: 1rem; margin: 0; }
+
+  .srv-cta-btns { display: flex; flex-wrap: wrap; gap: .75rem; }
+
+  .btn-white {
+    display: inline-block;
+    padding: .75rem 1.5rem;
+    border-radius: 7px;
+    font-weight: 700;
+    font-size: .95rem;
+    text-decoration: none;
+    background: #fff;
+    color: var(--c-primary);
+    transition: filter .15s;
+  }
+  .btn-white:hover { filter: brightness(.96); text-decoration: none; }
+</style>

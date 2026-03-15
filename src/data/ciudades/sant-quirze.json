@@ -1,0 +1,16 @@
+{
+  "slug": "sant-quirze",
+  "nombre": "Sant Quirze del Vallès",
+  "provincia": "Barcelona",
+  "lat": 41.5274,
+  "lng": 2.0847,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08192",
+  "zonas": [
+    "Centre", "Can Gatxet", "Can Llobateres",
+    "Terrassa", "Sabadell", "Rubí", "Ullastrell"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}

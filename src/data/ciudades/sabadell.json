@@ -1,0 +1,16 @@
+{
+  "slug": "sabadell",
+  "nombre": "Sabadell",
+  "provincia": "Barcelona",
+  "lat": 41.5433,
+  "lng": 2.1094,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08201",
+  "zonas": [
+    "Centre", "Gràcia", "Can Rull", "La Creu Alta", "Torre-romeu",
+    "Terrassa", "Badia del Vallès", "Barberà del Vallès", "Cerdanyola del Vallès"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}

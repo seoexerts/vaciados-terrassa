@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { ciudades, EMPRESA } from '../data/index';
+
+const title       = `Preguntas frecuentes | ${EMPRESA.nombre}`;
+const description = `Resolvemos las dudas más habituales sobre nuestros servicios en ${ciudades.map(c=>c.nombre).join(', ')}: presupuesto, plazos, garantía y zonas de cobertura.`;
+
+const faqs = [
+  {
+    pregunta: '¿En qué ciudades ofrecéis servicio?',
+    respuesta: `Actualmente operamos en ${ciudades.map(c=>c.nombre).join(', ')} y seguimos expandiéndonos. Si tu ciudad no aparece, contáctanos — es posible que podamos atenderte igualmente.`,
+  },
+  {
+    pregunta: '¿Cuánto tarda en llegar un técnico?',
+    respuesta: 'Nuestro objetivo es responder en 24–48 horas laborables. Para urgencias, llama directamente al número de tu ciudad y te buscaremos hueco lo antes posible.',
+  },
+  {
+    pregunta: '¿El presupuesto es gratuito?',
+    respuesta: 'Sí, todos nuestros presupuestos son completamente gratuitos y sin compromiso. Te lo enviamos detallado por escrito antes de comenzar ningún trabajo.',
+  },
+  {
+    pregunta: '¿Qué garantía ofrecéis en los trabajos?',
+    respuesta: 'Ofrecemos garantía de 2 años en instalaciones y 1 año en reparaciones, además de la garantía de los materiales del fabricante. Todo por escrito.',
+  },
+  {
+    pregunta: '¿Trabajáis con particulares y empresas?',
+    respuesta: 'Sí. Atendemos tanto a particulares como a comunidades de vecinos, empresas e industrias. Adaptamos los horarios y el tipo de contrato a tus necesidades.',
+  },
+  {
+    pregunta: '¿Usáis materiales de calidad?',
+    respuesta: 'Trabajamos exclusivamente con materiales de fabricantes homologados. En cada presupuesto especificamos las referencias exactas para que puedas compararlas.',
+  },
+  {
+    pregunta: '¿Puedo pedir cita un fin de semana?',
+    respuesta: 'Disponemos de servicio de urgencias los fines de semana y festivos. Para trabajos ordinarios pedimos cita previa con al menos 24 horas de antelación.',
+  },
+  {
+    pregunta: '¿Qué ocurre si hay algún problema tras el trabajo?',
+    respuesta: 'Basta con que contactes con nosotros. Cubrimos cualquier incidencia relacionada con el trabajo realizado dentro del periodo de garantía sin coste adicional.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+
+  <div class="page-header">
+    <div class="container">
+      <span class="eyebrow">Preguntas frecuentes</span>
+      <h1>Resolvemos tus dudas</h1>
+      <p class="page-header-sub">
+        Todo lo que necesitas saber antes de contratar nuestros servicios.
+        ¿No encuentras tu pregunta? <a href="/contacto">Escríbenos directamente</a>.
+      </p>
+    </div>
+  </div>
+
+  <section class="page-section" aria-labelledby="faq-lista-heading">
+    <div class="container">
+      <h2 id="faq-lista-heading" class="faq-section-heading">Todas las preguntas frecuentes</h2>
+      <div class="faq-list">
+        {faqs.map((faq, i) => (
+          <details class="faq-item" open={i === 0 || undefined}>
+            <summary>
+              <span>{faq.pregunta}</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 8l5 5 5-5"/>
+                </svg>
+              </span>
+            </summary>
+            <p>{faq.respuesta}</p>
+          </details>
+        ))}
+      </div>
+
+      <div class="faq-links">
+        <p>
+          Explora nuestros <a href="/servicios/">servicios de vaciado y limpieza</a>,
+          o consulta directamente las páginas de
+          <a href="/terrassa/vaciado-pisos/">vaciado de pisos en Terrassa</a>,
+          <a href="/terrassa/vaciado-locales/">vaciado de locales en Terrassa</a>
+          y <a href="/terrassa/recogida-muebles/">recogida de muebles en Terrassa</a>.
+        </p>
+      </div>
+
+      <div class="faq-cta">
+        <p>¿Tienes alguna pregunta que no aparece aquí?</p>
+        <a href="/contacto" class="btn btn-primary btn-lg">Contáctanos →</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-top: var(--header-h);
+    background: linear-gradient(150deg, #0d1b3e 0%, #0f2a5c 50%, #0057ff 100%);
+    padding-block: 4.5rem 3.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 55% 60% at 75% 15%, rgba(0,100,255,.3) 0%, transparent 65%),
+      radial-gradient(ellipse 35% 40% at 15% 85%, rgba(80,80,200,.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page-header .container { position: relative; z-index: 1; }
+  .page-header .eyebrow {
+    color: rgba(255,255,255,.9);
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .page-header h1 { color: #fff; margin-bottom: .75rem; margin-top: .5rem; }
+  .page-header-sub {
+    color: rgba(255,255,255,.72);
+    font-size: 1rem;
+    max-width: 580px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+  .page-header-sub a { color: #93c5fd; }
+
+  .faq-section-heading {
+    font-size: 1.3rem;
+    margin-bottom: 1.75rem;
+    color: var(--c-text);
+  }
+
+  .faq-list {
+    max-width: 780px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+  }
+
+  .faq-item {
+    border: 1px solid var(--c-border);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    transition: box-shadow .2s;
+  }
+  .faq-item[open] { box-shadow: var(--sh-card); }
+
+  .faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: .95rem;
+    list-style: none;
+    user-select: none;
+    background: var(--c-bg);
+    transition: background .15s;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary:hover                   { background: var(--c-bg-tint); }
+  .faq-item[open] summary                   { background: var(--c-primary-l); color: var(--c-primary); }
+
+  .faq-chevron { flex-shrink: 0; width: 20px; height: 20px; transition: transform .25s; }
+  .faq-item[open] .faq-chevron { transform: rotate(180deg); }
+  .faq-chevron svg { width: 100%; height: 100%; }
+
+  .faq-item p {
+    padding: 1.1rem 1.5rem 1.35rem;
+    font-size: .93rem;
+    color: var(--c-text-m);
+    line-height: 1.7;
+    border-top: 1px solid var(--c-border);
+  }
+
+  .faq-links {
+    margin-top: 2rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--c-primary-l);
+    border: 1px solid #bfdbfe;
+    border-radius: var(--r-md);
+    font-size: .9rem;
+    color: var(--c-text-m);
+    line-height: 1.7;
+  }
+  .faq-links a { color: var(--c-primary); font-weight: 500; }
+  .faq-links a:hover { text-decoration: underline; }
+
+  .faq-cta {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2.5rem;
+    background: var(--c-bg-tint);
+    border-radius: var(--r-xl);
+    border: 1px solid var(--c-border);
+  }
+  .faq-cta p { color: var(--c-text-m); margin-bottom: 1.25rem; font-size: 1.05rem; }
+</style>

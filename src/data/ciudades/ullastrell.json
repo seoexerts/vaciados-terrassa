@@ -1,0 +1,16 @@
+{
+  "slug": "ullastrell",
+  "nombre": "Ullastrell",
+  "provincia": "Barcelona",
+  "lat": 41.5097,
+  "lng": 1.9783,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08231",
+  "zonas": [
+    "Centre", "Urbanització Can Valls",
+    "Terrassa", "Viladecavalls", "Vacarisses"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}

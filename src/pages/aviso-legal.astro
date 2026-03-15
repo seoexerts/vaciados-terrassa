@@ -1,0 +1,148 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+
+const title       = `Aviso legal | ${siteConfig.businessName}`;
+const description = `Aviso legal de ${siteConfig.businessName}. Información sobre el titular del sitio web, condiciones de uso y propiedad intelectual.`;
+
+const fechaActualizacion = '15 de marzo de 2025';
+---
+
+<BaseLayout title={title} description={description}>
+
+  <div class="page-header">
+    <div class="container">
+      <span class="eyebrow">Legal</span>
+      <h1>Aviso legal</h1>
+      <p class="page-header-sub">Última actualización: {fechaActualizacion}</p>
+    </div>
+  </div>
+
+  <section class="page-section">
+    <div class="container legal-body">
+
+      <h2>1. Datos del titular</h2>
+      <p>
+        En cumplimiento de la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la
+        Información y de Comercio Electrónico (LSSI-CE), se facilitan los siguientes datos:
+      </p>
+      <p>
+        <strong>Denominación social:</strong> {siteConfig.businessNameLegal}<br />
+        <strong>CIF/NIF:</strong> {siteConfig.cif}<br />
+        <strong>Domicilio:</strong> {siteConfig.mainCity}, España<br />
+        <strong>Correo electrónico:</strong> <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a><br />
+        <strong>Teléfono:</strong> <a href={`tel:${siteConfig.phone.replace(/\s/g,'')}`}>{siteConfig.phone}</a><br />
+        <strong>Web:</strong> <a href={siteConfig.web}>{siteConfig.web}</a>
+      </p>
+
+      <h2>2. Objeto y ámbito de aplicación</h2>
+      <p>
+        El presente Aviso Legal regula el acceso y el uso del sitio web <strong>{siteConfig.web}</strong>,
+        titularidad de {siteConfig.businessNameLegal}. El acceso al sitio web y la utilización de sus
+        contenidos implica la aceptación plena y sin reservas de las presentes condiciones.
+      </p>
+
+      <h2>3. Condiciones de uso</h2>
+      <p>
+        El usuario se compromete a hacer un uso adecuado de los contenidos y servicios ofrecidos,
+        y a no emplearlos para:
+      </p>
+      <ul>
+        <li>Incurrir en actividades ilícitas, ilegales o contrarias a la buena fe.</li>
+        <li>Difundir contenidos o propaganda de carácter racista, xenófobo, pornográfico o que atente contra la dignidad de las personas.</li>
+        <li>Causar daños en los sistemas físicos o lógicos del titular o de terceros.</li>
+        <li>Introducir o difundir virus informáticos o cualquier otro sistema físico o lógico dañino.</li>
+      </ul>
+
+      <h2>4. Propiedad intelectual e industrial</h2>
+      <p>
+        Todos los contenidos del sitio web —textos, imágenes, gráficos, logotipos, iconos,
+        código fuente y diseño gráfico— son propiedad de {siteConfig.businessNameLegal} o de
+        terceros que han autorizado su uso, y están protegidos por la legislación española e
+        internacional sobre propiedad intelectual e industrial.
+      </p>
+      <p>
+        Queda expresamente prohibida la reproducción, distribución, comunicación pública o
+        transformación de los contenidos sin autorización previa y por escrito del titular.
+      </p>
+
+      <h2>5. Exclusión de garantías y responsabilidad</h2>
+      <p>
+        {siteConfig.businessNameLegal} no se hace responsable de los daños o perjuicios
+        derivados del uso del sitio web, ni de posibles errores u omisiones en los contenidos,
+        ni de la falta de disponibilidad del sitio. El titular se reserva el derecho a modificar,
+        suspender o interrumpir el acceso al sitio web sin previo aviso.
+      </p>
+      <p>
+        Los enlaces a sitios web de terceros se facilitan únicamente como información. El titular
+        no controla ni se responsabiliza del contenido de dichos sitios.
+      </p>
+
+      <h2>6. Legislación aplicable y jurisdicción</h2>
+      <p>
+        Las presentes condiciones se rigen por la legislación española. Para la resolución de
+        cualquier controversia derivada del acceso o uso de este sitio web, las partes se someten
+        a los Juzgados y Tribunales de {siteConfig.mainCity}, con renuncia expresa a cualquier
+        otro fuero que pudiera corresponderles.
+      </p>
+
+      <h2>7. Modificaciones</h2>
+      <p>
+        El titular se reserva el derecho a actualizar, modificar o eliminar la información
+        contenida en este aviso legal sin previo aviso. Se recomienda consultar periódicamente
+        esta página para estar informado de cualquier cambio.
+      </p>
+
+      <div class="legal-back">
+        <a href="/" class="btn btn-primary">← Volver al inicio</a>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-top: var(--header-h);
+    background: var(--c-bg-tint);
+    border-bottom: 1px solid var(--c-border);
+    padding-block: 3rem 2.5rem;
+    text-align: center;
+  }
+  .page-header h1 { margin-bottom: .5rem; }
+  .page-header-sub { color: var(--c-text-l); font-size: .9rem; }
+
+  .legal-body {
+    max-width: 760px;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .legal-body h2 {
+    font-size: 1.15rem;
+    margin-top: .5rem;
+    margin-bottom: -.5rem;
+    color: var(--c-text);
+  }
+
+  .legal-body p,
+  .legal-body li {
+    font-size: .95rem;
+    color: var(--c-text-m);
+    line-height: 1.75;
+  }
+
+  .legal-body ul {
+    padding-inline-start: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+  }
+
+  .legal-body a { color: var(--c-primary); }
+
+  .legal-back { margin-top: 1rem; }
+</style>

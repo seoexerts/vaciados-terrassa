@@ -1,0 +1,18 @@
+{
+  "slug": "terrassa",
+  "nombre": "Terrassa",
+  "provincia": "Barcelona",
+  "lat": 41.5631,
+  "lng": 2.0089,
+  "telefono": "+34 633 75 96 49",
+  "email": "seoexpertsslu@gmail.com",
+  "direccion": "Carrer del Pare Llaurador, 255-245",
+  "codigoPostal": "08224",
+  "zonas": [
+    "Centre", "Can Palet", "Ca n'Anglada", "Sant Pere", "Vallparadís",
+    "Les Arenes", "Ca n'Aurell", "Vilardell", "Ègara",
+    "Rubí", "Sabadell", "Matadepera", "Viladecavalls", "Ullastrell",
+    "Castellbisbal", "Sant Quirze del Vallès", "Cerdanyola del Vallès"
+  ],
+  "serviciosActivos": ["vaciado-pisos", "vaciado-locales", "recogida-muebles"]
+}
